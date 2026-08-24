@@ -1,5 +1,5 @@
 import json
-from services.llm_service import ask_llm
+from backend.services.llm_service import ask_llm
 
 
 def analyze_resume(resume_text):

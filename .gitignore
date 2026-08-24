@@ -1,4 +1,5 @@
 .env
 __pycache__/
 *.pyc
+*.pyo
 backend/sample_resume.pdf
