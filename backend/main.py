@@ -1,4 +1,5 @@
 from fastapi import FastAPI, UploadFile, File
+from fastapi.middleware.cors import CORSMiddleware
 import tempfile
 import os
 from backend.services.pdf_parser import extract_text_from_pdf
@@ -7,6 +8,13 @@ from backend.agents.resume_analyser import analyze_resume
 app = FastAPI(
     title="Multi-Agent Interview System",
     description="Resume Analyser Agent API"
+)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:5500"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
