@@ -4,6 +4,7 @@ import tempfile
 import os
 from backend.services.pdf_parser import extract_text_from_pdf
 from backend.agents.resume_analyser import analyze_resume
+from backend.agents.jd_analyser import analyze_job_description
 
 app = FastAPI(
     title="Multi-Agent Interview System",
@@ -59,3 +60,16 @@ async def analyze_resume_api(file: UploadFile = File(...)):
         # Delete temporary file
         if os.path.exists(temp_file_path):
             os.remove(temp_file_path)
+
+@app.post("/analyze-job-description")
+async def analyze_job_description_api(data: dict):
+    job_description = data.get("job_description", "")
+
+    if not job_description.strip():
+        return {
+            "error": "Job description is required"
+        }
+
+    result = analyze_job_description(job_description)
+
+    return result
