@@ -1,64 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AI Resume Analyzer</title>
+<html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css">
+<title>AI Resume & Job Description Analyzer</title>
+
+<link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <h1>AI Resume Analyzer</h1>
+    <h1>AI Resume & Job Description Analyzer</h1>
 
-        <p class="subtitle">
-            Upload your resume and let AI analyze your skills, projects,
-            education and experience.
-        </p>
+    <p class="subtitle">
+        Upload your resume or enter a job description and let AI analyze it.
+    </p>
 
-        <div class="upload-box">
+    <!-- Resume Analyzer -->
 
-            <input
-                type="file"
-                id="resumeFile"
-                accept=".pdf"
-            >
+    <div class="upload-box">
 
-            <button id="analyzeBtn">
-                Analyze Resume
-            </button>
+        <h2>Resume Analysis</h2>
 
-            <p id="status"></p>
+        <input
+            type="file"
+            id="resumeFile"
+            accept=".pdf"
+        >
 
-        </div>
+        <button id="analyzeBtn">
+            Analyze Resume
+        </button>
 
-        <div id="result" class="result hidden">
-
-            <h2>Resume Analysis</h2>
-
-            <div id="candidate"></div>
-
-            <div id="skills"></div>
-
-            <div id="projects"></div>
-
-            <div id="experience"></div>
-
-            <div id="certifications"></div>
-
-            <div id="strengths"></div>
-
-            <div id="skillGaps"></div>
-
-        </div>
+        <p id="status"></p>
 
     </div>
 
-    <script src="script.js"></script>
+    <div id="result" class="result hidden">
 
-</body>
-</html>
+        <h2>Resume Analysis</h2>
+
+        <div id="candidate"></div>
+
+        <div id="skills"></div>
+
+        <div id="projects"></div>
+
+        <div id="experience"></div>
+
+        <div id="certifications"></div>
+
+        <div id="strengths"></div>
+
+        <div id="skillGaps"></div>
+
+    </div>
+
+    <!-- Job Description Analyzer -->
+
+    <div class="upload-box"> 
+ 
+        <h2>Job Description Analysis</h2> 
+     
+        <input 
+            type="file" 
+            id="jobDescriptionFile" 
+            accept=".pdf,.doc,.docx,.txt"
+        > 
+     
+        <p>Or paste the job description below:</p> 
+     
+        <textarea 
+            id="jobDescription" 
+            rows="10" 
+            placeholder="Paste the job description here..." 
+        ></textarea> 
+     
+        <button id="analyzeJobBtn"> 
+            Analyze Job Description 
+        </button> 
+     
+        <p id="jobStatus"></p> 
+     
+    </div>
+
+    <div id="jobResult" class="result hidden">
+
+        <h2>Job Description Analysis</h2>
+
+        <div id="jobDetails"></div>
+
+        <div id="jobSkills"></div>
+
+        <div id="jobResponsibilities"></div>
+
+        <div id="jobKeywords"></div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body> </html>
