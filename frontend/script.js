@@ -19,29 +19,25 @@ if (analyzeBtn) {
 
     analyzeBtn.addEventListener("click", async () => {
 
-        const file = fileInput.files[0];
+        const file = fileInput ? fileInput.files[0] : null;
 
         // Check file
         if (!file) {
-            status.textContent =
-                "Please select a PDF resume.";
+            status.textContent = "Please select a PDF resume.";
             return;
         }
 
         // Check PDF
         if (!file.name.toLowerCase().endsWith(".pdf")) {
-            status.textContent =
-                "Please upload a PDF file.";
+            status.textContent = "Please upload a PDF file.";
             return;
         }
 
         // Create FormData
         const formData = new FormData();
-
         formData.append("file", file);
 
-        status.textContent =
-            "Analyzing resume...";
+        status.textContent = "Analyzing resume...";
 
         try {
 
@@ -58,7 +54,6 @@ if (analyzeBtn) {
             console.log("Resume API response:", data);
 
             if (!response.ok) {
-
                 throw new Error(
                     data.detail ||
                     data.error ||
@@ -67,10 +62,7 @@ if (analyzeBtn) {
             }
 
             if (data.error) {
-
-                throw new Error(
-                    data.error
-                );
+                throw new Error(data.error);
             }
 
             displayResult(data);
@@ -89,9 +81,7 @@ if (analyzeBtn) {
                 "Could not connect to Resume Analyzer API: " +
                 error.message;
         }
-
     });
-
 }
 
 
@@ -104,7 +94,6 @@ function displayResult(data) {
     if (result) {
         result.classList.remove("hidden");
     }
-
 
     // ===============================
     // CANDIDATE
@@ -119,7 +108,6 @@ function displayResult(data) {
             data.candidate || {};
 
         candidateElement.innerHTML = `
-
             <div class="card">
 
                 <h3>Candidate</h3>
@@ -140,7 +128,6 @@ function displayResult(data) {
                 </p>
 
             </div>
-
         `;
     }
 
@@ -155,7 +142,6 @@ function displayResult(data) {
     if (skillsElement) {
 
         skillsElement.innerHTML = `
-
             <div class="card">
 
                 <h3>Technical Skills</h3>
@@ -165,7 +151,6 @@ function displayResult(data) {
                 )}
 
             </div>
-
         `;
     }
 
@@ -180,7 +165,6 @@ function displayResult(data) {
     if (projectsElement) {
 
         projectsElement.innerHTML = `
-
             <div class="card">
 
                 <h3>Projects</h3>
@@ -190,7 +174,6 @@ function displayResult(data) {
                 )}
 
             </div>
-
         `;
     }
 
@@ -205,7 +188,6 @@ function displayResult(data) {
     if (experienceElement) {
 
         experienceElement.innerHTML = `
-
             <div class="card">
 
                 <h3>Internships & Experience</h3>
@@ -215,7 +197,6 @@ function displayResult(data) {
                 )}
 
             </div>
-
         `;
     }
 
@@ -230,7 +211,6 @@ function displayResult(data) {
     if (certificationsElement) {
 
         certificationsElement.innerHTML = `
-
             <div class="card">
 
                 <h3>Certifications</h3>
@@ -240,7 +220,6 @@ function displayResult(data) {
                 )}
 
             </div>
-
         `;
     }
 
@@ -255,7 +234,6 @@ function displayResult(data) {
     if (strengthsElement) {
 
         strengthsElement.innerHTML = `
-
             <div class="card">
 
                 <h3>Strengths</h3>
@@ -265,7 +243,6 @@ function displayResult(data) {
                 )}
 
             </div>
-
         `;
     }
 
@@ -280,7 +257,6 @@ function displayResult(data) {
     if (skillGapsElement) {
 
         skillGapsElement.innerHTML = `
-
             <div class="card">
 
                 <h3>Skill Gaps</h3>
@@ -290,10 +266,8 @@ function displayResult(data) {
                 )}
 
             </div>
-
         `;
     }
-
 }
 
 
@@ -309,6 +283,7 @@ function createList(items) {
 
 
     // If backend sends a string
+
     if (typeof items === "string") {
 
         return `
@@ -320,6 +295,7 @@ function createList(items) {
 
 
     // If backend sends empty array
+
     if (!Array.isArray(items) || items.length === 0) {
 
         return "<p>Not available</p>";
@@ -327,19 +303,18 @@ function createList(items) {
 
 
     return `
-
         <ul>
 
             ${items.map(item => {
 
                 // Object
+
                 if (
                     typeof item === "object" &&
                     item !== null
                 ) {
 
                     return `
-
                         <li>
 
                             <strong>
@@ -361,6 +336,7 @@ function createList(items) {
                                 item.technologies
                                     ? `
                                         <br>
+
                                         <strong>
                                             Technologies:
                                         </strong>
@@ -380,21 +356,23 @@ function createList(items) {
                                 item.role
                                     ? `
                                         <br>
+
                                         <strong>
                                             Role:
                                         </strong>
+
                                         ${item.role}
                                     `
                                     : ""
                             }
 
                         </li>
-
                     `;
                 }
 
 
                 // Normal string
+
                 return `
                     <li>${item}</li>
                 `;
@@ -402,7 +380,6 @@ function createList(items) {
             }).join("")}
 
         </ul>
-
     `;
 }
 
@@ -410,6 +387,9 @@ function createList(items) {
 // ===============================
 // JOB DESCRIPTION ANALYZER
 // ===============================
+
+const jobDescriptionFile =
+    document.getElementById("jobDescriptionFile");
 
 const jobDescriptionInput =
     document.getElementById("jobDescription");
@@ -425,7 +405,7 @@ const jobResult =
 
 
 // ===============================
-// ANALYZE PASTED JOB DESCRIPTION
+// ANALYZE JOB DESCRIPTION
 // ===============================
 
 if (analyzeJobBtn) {
@@ -434,98 +414,229 @@ if (analyzeJobBtn) {
         "click",
         async () => {
 
+            // Get selected JD file
+
+            const file =
+                jobDescriptionFile
+                    ? jobDescriptionFile.files[0]
+                    : null;
+
+
+            // Get pasted JD
+
             const jobDescription =
-                jobDescriptionInput.value.trim();
+                jobDescriptionInput
+                    ? jobDescriptionInput.value.trim()
+                    : "";
 
 
-            // Check JD
-            if (!jobDescription) {
+            // ===============================
+            // OPTION 1: JD FILE UPLOAD
+            // ===============================
+
+            if (file) {
+
+                const allowedExtensions = [
+                    ".txt",
+                    ".pdf",
+                    ".docx"
+                ];
+
+                const fileName =
+                    file.name.toLowerCase();
+
+                const isAllowed =
+                    allowedExtensions.some(
+                        extension =>
+                            fileName.endsWith(extension)
+                    );
+
+
+                if (!isAllowed) {
+
+                    jobStatus.textContent =
+                        "Please choose a TXT, PDF, or DOCX file.";
+
+                    return;
+                }
+
 
                 jobStatus.textContent =
-                    "Please enter a job description.";
+                    "Uploading and analyzing JD file...";
+
+
+                try {
+
+                    // Create FormData
+
+                    const formData =
+                        new FormData();
+
+                    formData.append(
+                        "file",
+                        file
+                    );
+
+
+                    // Send JD file to backend
+
+                    const response =
+                        await fetch(
+                            `${API_BASE_URL}/analyze-job-description-file`,
+                            {
+                                method: "POST",
+                                body: formData
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    console.log(
+                        "JD File API response:",
+                        data
+                    );
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            data.detail ||
+                            data.error ||
+                            "JD file analysis failed."
+                        );
+                    }
+
+
+                    if (data.error) {
+
+                        throw new Error(
+                            data.error
+                        );
+                    }
+
+
+                    // Display result
+
+                    displayJobResult(data);
+
+
+                    jobStatus.textContent =
+                        "Job description file analyzed successfully!";
+
+
+                } catch (error) {
+
+                    console.error(
+                        "JD file analyzer error:",
+                        error
+                    );
+
+                    jobStatus.textContent =
+                        "Could not analyze the JD file: " +
+                        error.message;
+                }
+
 
                 return;
             }
 
 
-            jobStatus.textContent =
-                "Analyzing job description...";
+            // ===============================
+            // OPTION 2: PASTE JD
+            // ===============================
+
+            if (jobDescription) {
+
+                jobStatus.textContent =
+                    "Analyzing job description...";
 
 
-            try {
+                try {
 
-                // IMPORTANT:
-                // This endpoint accepts JSON.
-                // We are NOT uploading a PDF.
+                    const response =
+                        await fetch(
+                            `${API_BASE_URL}/analyze-job-description`,
+                            {
+                                method: "POST",
 
-                const response = await fetch(
-                    `${API_BASE_URL}/analyze-job-description`,
-                    {
-                        method: "POST",
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
 
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
+                                body: JSON.stringify({
+                                    job_description:
+                                        jobDescription
+                                })
+                            }
+                        );
 
-                        body: JSON.stringify({
-                            job_description:
-                                jobDescription
-                        })
+
+                    const data =
+                        await response.json();
+
+
+                    console.log(
+                        "JD Text API response:",
+                        data
+                    );
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            data.detail ||
+                            data.error ||
+                            "Job description analysis failed."
+                        );
                     }
-                );
 
 
-                const data =
-                    await response.json();
+                    if (data.error) {
+
+                        throw new Error(
+                            data.error
+                        );
+                    }
 
 
-                console.log(
-                    "Job Description API response:",
-                    data
-                );
+                    // Display result
+
+                    displayJobResult(data);
 
 
-                if (!response.ok) {
+                    jobStatus.textContent =
+                        "Job description analyzed successfully!";
 
-                    throw new Error(
-                        data.detail ||
-                        data.error ||
-                        "Job description analysis failed."
+
+                } catch (error) {
+
+                    console.error(
+                        "JD text analyzer error:",
+                        error
                     );
+
+                    jobStatus.textContent =
+                        "Could not connect to Job Description Analyzer API: " +
+                        error.message;
                 }
 
 
-                if (data.error) {
-
-                    throw new Error(
-                        data.error
-                    );
-                }
-
-
-                displayJobResult(data);
-
-
-                jobStatus.textContent =
-                    "Job description analyzed successfully!";
-
-
-            } catch (error) {
-
-                console.error(
-                    "Job description analyzer error:",
-                    error
-                );
-
-                jobStatus.textContent =
-                    "Could not connect to Job Description Analyzer API: " +
-                    error.message;
+                return;
             }
 
+
+            // ===============================
+            // NOTHING ENTERED
+            // ===============================
+
+            jobStatus.textContent =
+                "Please paste a job description or choose a file.";
         }
     );
-
 }
 
 
@@ -557,7 +668,6 @@ function displayJobResult(data) {
     if (jobDetails) {
 
         jobDetails.innerHTML = `
-
             <div class="card">
 
                 <h3>Job Details</h3>
@@ -595,11 +705,9 @@ function displayJobResult(data) {
                         job.experience_required ||
                         "Not available"
                     }
-
                 </p>
 
             </div>
-
         `;
     }
 
@@ -614,7 +722,6 @@ function displayJobResult(data) {
     if (jobSkills) {
 
         jobSkills.innerHTML = `
-
             <div class="card">
 
                 <h3>Required Skills</h3>
@@ -645,7 +752,6 @@ function displayJobResult(data) {
                 )}
 
             </div>
-
         `;
     }
 
@@ -662,7 +768,6 @@ function displayJobResult(data) {
     if (jobResponsibilities) {
 
         jobResponsibilities.innerHTML = `
-
             <div class="card">
 
                 <h3>Responsibilities</h3>
@@ -672,7 +777,6 @@ function displayJobResult(data) {
                 )}
 
             </div>
-
         `;
     }
 
@@ -689,7 +793,6 @@ function displayJobResult(data) {
     if (jobKeywords) {
 
         jobKeywords.innerHTML = `
-
             <div class="card">
 
                 <h3>Keywords</h3>
@@ -699,8 +802,6 @@ function displayJobResult(data) {
                 )}
 
             </div>
-
         `;
     }
-
 }
