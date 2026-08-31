@@ -4,59 +4,288 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AI Resume Analyzer</title>
+    <title>HirePrep | AI-Powered Interview Preparation</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div class="container">
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
 
-        <h1>AI Resume Analyzer</h1>
+    <header class="navbar">
 
-        <p class="subtitle">
-            Upload your resume and let AI analyze your skills, projects,
-            education and experience.
-        </p>
+        <div class="brand">
+            <div class="brand-icon">✦</div>
 
-        <div class="upload-box">
+            <div>
+                <div class="brand-name">HirePrep</div>
+                <div class="brand-subtitle">Multi-Agent Interview System</div>
+            </div>
+        </div>
 
-            <input
-                type="file"
-                id="resumeFile"
-                accept=".pdf"
-            >
+        <div class="nav-status">
+            <span class="status-dot"></span>
+            AI System Ready
+        </div>
 
-            <button id="analyzeBtn">
-                Analyze Resume
+    </header>
+
+
+    <main class="container">
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <div class="hero-badge">
+                ✦ AI-POWERED INTERVIEW PREPARATION
+            </div>
+
+            <h1>
+                Prepare smarter.<br>
+                <span>Interview with confidence.</span>
+            </h1>
+
+            <p>
+                Upload your resume and job description.
+                Our AI agents analyze your profile and generate
+                personalized interview questions.
+            </p>
+
+        </section>
+
+
+        <!-- UPLOAD SECTION -->
+
+        <section class="upload-section">
+
+            <!-- RESUME -->
+
+            <div class="upload-card" id="resumeCard">
+
+                <div class="card-top">
+
+                    <div class="file-icon resume-icon">
+                        📄
+                    </div>
+
+                    <div class="card-label">
+                        REQUIRED
+                    </div>
+
+                </div>
+
+                <h2>Your Resume</h2>
+
+                <p class="card-description">
+                    Upload your latest resume in PDF format.
+                </p>
+
+                <label for="resumeFile" class="drop-zone">
+
+                    <div class="upload-symbol">
+                        ↑
+                    </div>
+
+                    <strong>Choose Resume PDF</strong>
+
+                    <span>
+                        Click to browse or drag & drop
+                    </span>
+
+                </label>
+
+                <input
+                    type="file"
+                    id="resumeFile"
+                    accept=".pdf"
+                    hidden
+                >
+
+                <div class="selected-file" id="resumeSelected">
+                    <span>○</span>
+                    <span>No file selected</span>
+                </div>
+
+            </div>
+
+
+            <!-- JOB DESCRIPTION -->
+
+            <div class="upload-card" id="jdCard">
+
+                <div class="card-top">
+
+                    <div class="file-icon jd-icon">
+                        💼
+                    </div>
+
+                    <div class="card-label">
+                        REQUIRED
+                    </div>
+
+                </div>
+
+                <h2>Job Description</h2>
+
+                <p class="card-description">
+                    Upload the job description as a PDF.
+                </p>
+
+                <label for="jdFile" class="drop-zone">
+
+                    <div class="upload-symbol">
+                        ↑
+                    </div>
+
+                    <strong>Choose JD PDF</strong>
+
+                    <span>
+                        Click to browse or drag & drop
+                    </span>
+
+                </label>
+
+                <input
+                    type="file"
+                    id="jdFile"
+                    accept=".pdf"
+                    hidden
+                >
+
+                <div class="selected-file" id="jdSelected">
+                    <span>○</span>
+                    <span>No file selected</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- GENERATE BUTTON -->
+
+        <section class="action-section">
+
+            <button id="analyzeBtn" class="generate-btn">
+
+                <span>✦</span>
+
+                <span>Analyze & Generate Questions</span>
+
+                <span class="arrow">→</span>
+
             </button>
 
-            <p id="status"></p>
+            <p id="status" class="status">
+                Upload both PDF files to begin.
+            </p>
 
-        </div>
+        </section>
 
-        <div id="result" class="result hidden">
 
-            <h2>Resume Analysis</h2>
+        <!-- AI PROCESSING -->
 
-            <div id="candidate"></div>
+        <section id="processing" class="processing hidden">
 
-            <div id="skills"></div>
+            <div class="processing-header">
+                <div class="ai-loader">✦</div>
 
-            <div id="projects"></div>
+                <div>
+                    <h3>AI is analyzing your profile</h3>
+                    <p>This may take a few moments...</p>
+                </div>
+            </div>
 
-            <div id="experience"></div>
+            <div class="agent-steps">
 
-            <div id="certifications"></div>
+                <div class="agent-step">
+                    <span class="step-icon">✓</span>
 
-            <div id="strengths"></div>
+                    <div>
+                        <strong>Resume Analyzer</strong>
+                        <span>Extracting skills and experience</span>
+                    </div>
+                </div>
 
-            <div id="skillGaps"></div>
+                <div class="agent-step">
+                    <span class="step-icon">✓</span>
 
-        </div>
+                    <div>
+                        <strong>Job Description Analyzer</strong>
+                        <span>Identifying role requirements</span>
+                    </div>
+                </div>
 
-    </div>
+                <div class="agent-step active">
+                    <span class="step-icon">✦</span>
+
+                    <div>
+                        <strong>Question Generator</strong>
+                        <span>Preparing personalized questions</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RESULT -->
+
+        <section id="result" class="result hidden">
+
+            <div class="result-header">
+
+                <div>
+                    <div class="section-label">
+                        AI ANALYSIS
+                    </div>
+
+                    <h2>Resume Analysis</h2>
+                </div>
+
+            </div>
+
+
+            <div class="result-grid">
+
+                <div id="candidate"></div>
+
+                <div id="skills"></div>
+
+                <div id="projects"></div>
+
+                <div id="experience"></div>
+
+                <div id="certifications"></div>
+
+                <div id="strengths"></div>
+
+                <div id="skillGaps"></div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <span>InterviewAI</span>
+        <span>•</span>
+        <span>Powered by Multi-Agent AI</span>
+    </footer>
+
 
     <script src="script.js"></script>
 
