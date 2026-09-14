@@ -1,3 +1,5 @@
+const API_BASE_URL = "http://127.0.0.1:8000";
+
 const resumeFile = document.getElementById("resumeFile");
 const jdFile = document.getElementById("jdFile");
 
@@ -34,7 +36,7 @@ resumeFile.addEventListener("change", () => {
     }
 
     resumeSelected.innerHTML =
-        `<span>✓</span><span>${file.name}</span>`;
+        `<span>✓</span><span>${escapeHtml(file.name)}</span>`;
 });
 
 
@@ -57,12 +59,12 @@ jdFile.addEventListener("change", () => {
     }
 
     jdSelected.innerHTML =
-        `<span>✓</span><span>${file.name}</span>`;
+        `<span>✓</span><span>${escapeHtml(file.name)}</span>`;
 });
 
 
 /* -----------------------------
-   ANALYZE
+   ANALYZE EVERYTHING
 ----------------------------- */
 
 analyzeBtn.addEventListener("click", async () => {
@@ -70,115 +72,158 @@ analyzeBtn.addEventListener("click", async () => {
     const resume = resumeFile.files[0];
     const jd = jdFile.files[0];
 
-
     if (!resume) {
-
-        status.textContent =
-            "Please upload your resume PDF.";
-
+        status.textContent = "Please upload your resume PDF.";
         return;
     }
-
 
     if (!jd) {
-
-        status.textContent =
-            "Please upload the job description PDF.";
-
+        status.textContent = "Please upload the job description PDF.";
         return;
     }
-
 
     if (!resume.name.toLowerCase().endsWith(".pdf")) {
-
-        status.textContent =
-            "Resume must be a PDF.";
-
+        status.textContent = "Resume must be a PDF.";
         return;
     }
-
 
     if (!jd.name.toLowerCase().endsWith(".pdf")) {
-
-        status.textContent =
-            "Job description must be a PDF.";
-
+        status.textContent = "Job description must be a PDF.";
         return;
     }
 
 
-    /*
-     * UI loading state
-     */
+    /* -----------------------------
+       START PROCESSING
+    ----------------------------- */
+
+    analyzeBtn.disabled = true;
 
     processing.classList.remove("hidden");
-
     result.classList.add("hidden");
 
     status.textContent =
-        "Analyzing resume and job description...";
-
-
-    /*
-     * CURRENTLY:
-     *
-     * Your repository only has the Resume Analyzer
-     * connected to this frontend.
-     *
-     * We will connect the JD Analyzer and
-     * Question Generator once their API endpoints
-     * are confirmed.
-     */
-
-
-    const formData = new FormData();
-
-    formData.append("file", resume);
+        "AI agents are analyzing your resume and job description...";
 
 
     try {
 
-        const response = await fetch(
-            "http://127.0.0.1:8000/analyze-resume",
+        /* -----------------------------
+           STEP 1: RESUME ANALYSIS
+        ----------------------------- */
+
+        status.textContent =
+            "Step 1/3: Analyzing your resume...";
+
+        const resumeFormData = new FormData();
+        resumeFormData.append("file", resume);
+
+        const resumeResponse = await fetch(
+            `${API_BASE_URL}/analyze-resume`,
             {
                 method: "POST",
-                body: formData
+                body: resumeFormData
             }
         );
 
+        const resumeData = await resumeResponse.json();
 
-        const data = await response.json();
-
-
-        if (!response.ok) {
-
+        if (!resumeResponse.ok || resumeData.error) {
             throw new Error(
-                data.error ||
-                "Something went wrong."
+                resumeData.error ||
+                "Resume analysis failed."
             );
         }
 
 
-        displayResult(data);
-
+        /* -----------------------------
+           STEP 2: JOB DESCRIPTION
+        ----------------------------- */
 
         status.textContent =
-            "Resume analysis completed successfully.";
+            "Step 2/3: Analyzing the job description...";
+
+        const jdFormData = new FormData();
+        jdFormData.append("file", jd);
+
+        const jdResponse = await fetch(
+            `${API_BASE_URL}/analyze-job-description-file`,
+            {
+                method: "POST",
+                body: jdFormData
+            }
+        );
+
+        const jdData = await jdResponse.json();
+
+        if (!jdResponse.ok || jdData.error) {
+            throw new Error(
+                jdData.error ||
+                "Job description analysis failed."
+            );
+        }
+
+
+        /* -----------------------------
+           STEP 3: QUESTION GENERATION
+        ----------------------------- */
+
+        status.textContent =
+            "Step 3/3: Generating personalized interview questions...";
+
+        const questionResponse = await fetch(
+            `${API_BASE_URL}/generate-questions`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    resume_analysis: resumeData,
+                    jd_analysis: jdData
+                })
+            }
+        );
+
+        const questionData = await questionResponse.json();
+
+        if (!questionResponse.ok || questionData.error) {
+            throw new Error(
+                questionData.error ||
+                "Question generation failed."
+            );
+        }
+
+
+        /* -----------------------------
+           DISPLAY RESULTS
+        ----------------------------- */
+
+        displayResult(
+            resumeData,
+            jdData,
+            questionData
+        );
+
+        status.textContent =
+            "Analysis complete! Your personalized interview questions are ready.";
 
     }
 
     catch (error) {
 
-        console.error(error);
+        console.error("Interview preparation error:", error);
 
         status.textContent =
-            "Could not connect to Resume Analyzer API.";
+            error.message ||
+            "Something went wrong while analyzing your files.";
 
     }
 
     finally {
 
         processing.classList.add("hidden");
+        analyzeBtn.disabled = false;
 
     }
 
@@ -186,13 +231,21 @@ analyzeBtn.addEventListener("click", async () => {
 
 
 /* -----------------------------
-   DISPLAY RESULT
+   DISPLAY RESULTS
 ----------------------------- */
 
-function displayResult(data) {
+function displayResult(
+    resumeData,
+    jdData,
+    questionData
+) {
 
     result.classList.remove("hidden");
 
+
+    /* -----------------------------
+       CANDIDATE
+    ----------------------------- */
 
     document.getElementById("candidate").innerHTML = `
 
@@ -202,22 +255,35 @@ function displayResult(data) {
 
             <p>
                 <strong>Name:</strong>
-                ${data.candidate?.name || "Not available"}
+                ${escapeHtml(
+                    resumeData.candidate?.name ||
+                    "Not available"
+                )}
             </p>
 
             <p>
                 <strong>Email:</strong>
-                ${data.candidate?.email || "Not available"}
+                ${escapeHtml(
+                    resumeData.candidate?.email ||
+                    "Not available"
+                )}
             </p>
 
             <p>
                 <strong>CGPA:</strong>
-                ${data.candidate?.cgpa || "Not available"}
+                ${escapeHtml(
+                    resumeData.candidate?.cgpa ||
+                    "Not available"
+                )}
             </p>
 
         </div>
     `;
 
+
+    /* -----------------------------
+       SKILLS
+    ----------------------------- */
 
     document.getElementById("skills").innerHTML = `
 
@@ -225,11 +291,17 @@ function displayResult(data) {
 
             <h3>Technical Skills</h3>
 
-            ${createList(data.skills?.technical)}
+            ${createList(
+                resumeData.skills?.technical
+            )}
 
         </div>
     `;
 
+
+    /* -----------------------------
+       PROJECTS
+    ----------------------------- */
 
     document.getElementById("projects").innerHTML = `
 
@@ -237,11 +309,17 @@ function displayResult(data) {
 
             <h3>Projects</h3>
 
-            ${createList(data.projects)}
+            ${createList(
+                resumeData.projects
+            )}
 
         </div>
     `;
 
+
+    /* -----------------------------
+       EXPERIENCE
+    ----------------------------- */
 
     document.getElementById("experience").innerHTML = `
 
@@ -249,11 +327,19 @@ function displayResult(data) {
 
             <h3>Internships & Experience</h3>
 
-            ${createList(data.internships)}
+            ${createList(
+                resumeData.internships?.length
+                    ? resumeData.internships
+                    : resumeData.experience
+            )}
 
         </div>
     `;
 
+
+    /* -----------------------------
+       CERTIFICATIONS
+    ----------------------------- */
 
     document.getElementById("certifications").innerHTML = `
 
@@ -261,11 +347,17 @@ function displayResult(data) {
 
             <h3>Certifications</h3>
 
-            ${createList(data.certifications)}
+            ${createList(
+                resumeData.certifications
+            )}
 
         </div>
     `;
 
+
+    /* -----------------------------
+       STRENGTHS
+    ----------------------------- */
 
     document.getElementById("strengths").innerHTML = `
 
@@ -273,11 +365,17 @@ function displayResult(data) {
 
             <h3>Strengths</h3>
 
-            ${createList(data.strengths)}
+            ${createList(
+                resumeData.strengths
+            )}
 
         </div>
     `;
 
+
+    /* -----------------------------
+       SKILL GAPS
+    ----------------------------- */
 
     document.getElementById("skillGaps").innerHTML = `
 
@@ -285,10 +383,189 @@ function displayResult(data) {
 
             <h3>Skill Gaps</h3>
 
-            ${createList(data.skill_gaps)}
+            ${createList(
+                resumeData.skill_gaps
+            )}
 
         </div>
     `;
+
+
+    /* -----------------------------
+       QUESTIONS
+    ----------------------------- */
+
+    displayQuestions(questionData.questions);
+
+
+    /* -----------------------------
+       JOB INFORMATION
+    ----------------------------- */
+
+    displayJobInformation(jdData);
+}
+
+
+/* -----------------------------
+   DISPLAY QUESTIONS
+----------------------------- */
+
+function displayQuestions(questions) {
+
+    if (!questions || questions.length === 0) {
+        return;
+    }
+
+
+    const questionContainer = document.createElement("div");
+
+    questionContainer.id = "questions";
+
+    questionContainer.className = "questions-section";
+
+
+    questionContainer.innerHTML = `
+
+        <div class="section-label">
+            PERSONALIZED INTERVIEW
+        </div>
+
+        <h2>Interview Questions</h2>
+
+        <div class="questions-list">
+
+            ${questions.map((item, index) => `
+
+                <div class="question-card">
+
+                    <div class="question-number">
+                        ${index + 1}
+                    </div>
+
+                    <div class="question-content">
+
+                        <h3>
+                            ${escapeHtml(
+                                item.question ||
+                                "Question unavailable"
+                            )}
+                        </h3>
+
+                        <div class="question-meta">
+
+                            <span>
+                                ${escapeHtml(
+                                    item.category ||
+                                    "General"
+                                )}
+                            </span>
+
+                            <span>
+                                ${escapeHtml(
+                                    item.difficulty ||
+                                    "Medium"
+                                )}
+                            </span>
+
+                        </div>
+
+                        ${
+                            item.reason
+                                ? `
+                                    <p class="question-reason">
+                                        <strong>Why this question:</strong>
+                                        ${escapeHtml(item.reason)}
+                                    </p>
+                                `
+                                : ""
+                        }
+
+                    </div>
+
+                </div>
+
+            `).join("")}
+
+        </div>
+    `;
+
+
+    result.appendChild(questionContainer);
+}
+
+
+/* -----------------------------
+   DISPLAY JOB INFORMATION
+----------------------------- */
+
+function displayJobInformation(jdData) {
+
+    if (!jdData || !jdData.job) {
+        return;
+    }
+
+
+    const existingJob =
+        document.getElementById("jobInformation");
+
+    if (existingJob) {
+        existingJob.remove();
+    }
+
+
+    const jobContainer = document.createElement("div");
+
+    jobContainer.id = "jobInformation";
+
+    jobContainer.className = "job-information";
+
+
+    jobContainer.innerHTML = `
+
+        <div class="card">
+
+            <h3>Job Information</h3>
+
+            <p>
+                <strong>Role:</strong>
+                ${escapeHtml(
+                    jdData.job.job_title ||
+                    "Not available"
+                )}
+            </p>
+
+            <p>
+                <strong>Company:</strong>
+                ${escapeHtml(
+                    jdData.job.company ||
+                    "Not available"
+                )}
+            </p>
+
+            <p>
+                <strong>Location:</strong>
+                ${escapeHtml(
+                    jdData.job.location ||
+                    "Not available"
+                )}
+            </p>
+
+            <p>
+                <strong>Experience:</strong>
+                ${escapeHtml(
+                    jdData.job.experience_required ||
+                    "Not available"
+                )}
+            </p>
+
+        </div>
+    `;
+
+
+    result.insertBefore(
+        jobContainer,
+        result.firstChild
+    );
 }
 
 
@@ -299,9 +576,7 @@ function displayResult(data) {
 function createList(items) {
 
     if (!items || items.length === 0) {
-
         return "<p>Not available</p>";
-
     }
 
 
@@ -318,12 +593,16 @@ function createList(items) {
                         <li>
 
                             <strong>
-                                ${item.name || item.title || "Project"}
+                                ${escapeHtml(
+                                    item.name ||
+                                    item.title ||
+                                    "Item"
+                                )}
                             </strong>
 
                             ${
                                 item.description
-                                    ? `<br>${item.description}`
+                                    ? `<br>${escapeHtml(item.description)}`
                                     : ""
                             }
 
@@ -335,11 +614,11 @@ function createList(items) {
                                             Technologies:
                                         </strong>
 
-                                        ${
+                                        ${escapeHtml(
                                             Array.isArray(item.technologies)
                                                 ? item.technologies.join(", ")
                                                 : item.technologies
-                                        }
+                                        )}
                                     `
                                     : ""
                             }
@@ -349,7 +628,7 @@ function createList(items) {
                                     ? `
                                         <br>
                                         <strong>Role:</strong>
-                                        ${item.role}
+                                        ${escapeHtml(item.role)}
                                     `
                                     : ""
                             }
@@ -359,10 +638,29 @@ function createList(items) {
                 }
 
 
-                return `<li>${item}</li>`;
+                return `<li>${escapeHtml(item)}</li>`;
 
             }).join("")}
 
         </ul>
     `;
+}
+
+
+/* -----------------------------
+   HTML ESCAPING
+----------------------------- */
+
+function escapeHtml(value) {
+
+    if (value === null || value === undefined) {
+        return "";
+    }
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }

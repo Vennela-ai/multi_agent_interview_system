@@ -7,6 +7,7 @@ from backend.services.pdf_parser import extract_text_from_pdf
 from backend.services.document_parser import extract_text_from_document
 from backend.agents.resume_analyser import analyze_resume
 from backend.agents.jd_analyser import analyze_job_description
+from backend.agents.question_generator import generate_questions
 
 
 app = FastAPI(
@@ -209,3 +210,32 @@ async def analyze_job_description_api(data: dict):
         return {
             "error": str(e)
         }
+
+# ===============================
+# QUESTION GENERATOR
+# ===============================
+
+@app.post("/generate-questions")
+async def generate_questions_api(data: dict):
+
+    resume_analysis = data.get("resume_analysis")
+    jd_analysis = data.get("jd_analysis")
+
+    if not resume_analysis:
+        return {"error": "Resume analysis is required."}
+
+    if not jd_analysis:
+        return {"error": "Job description analysis is required."}
+
+    try:
+        result = generate_questions(
+            resume_analysis,
+            jd_analysis
+        )
+        return result
+
+    except Exception as e:
+        print("Question generation error:", e)
+        return {"error": str(e)}
+
+
