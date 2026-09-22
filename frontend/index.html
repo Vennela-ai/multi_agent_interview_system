@@ -4,167 +4,430 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>HirePrep | AI-Powered Interview Preparation</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
+    <title>HirePrep | Interview Preparation</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div class="background-glow glow-one"></div>
-    <div class="background-glow glow-two"></div>
-
+    <!-- Navigation -->
     <header class="navbar">
+        <div class="nav-container">
 
-        <div class="brand">
-            <div class="brand-icon">✦</div>
-
-            <div>
-                <div class="brand-name">HirePrep</div>
-                <div class="brand-subtitle">Multi-Agent Interview System</div>
+            <div class="brand">
+                <div class="brand-logo">H</div>
+                <div>
+                    <div class="brand-name">HirePrep</div>
+                    <div class="brand-subtitle">Multi-Agent Interview System</div>
+                </div>
             </div>
-        </div>
 
-        <div class="nav-status">
-            <span class="status-dot"></span>
-            AI System Ready
-        </div>
+            <nav class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+            </nav>
 
+            <div class="nav-status">
+                <span class="status-dot"></span>
+                AI System Ready
+            </div>
+
+        </div>
     </header>
 
 
-    <main class="container">
+    <main>
 
-        <!-- HERO -->
+        <!-- Hero Section -->
+        <section class="hero" id="home">
 
-        <section class="hero">
+            <div class="hero-container">
 
-            <div class="hero-badge">
-                ✦ AI-POWERED INTERVIEW PREPARATION
-            </div>
+                <div class="hero-content">
 
-            <h1>
-                Prepare smarter.<br>
-                <span>Interview with confidence.</span>
-            </h1>
-
-            <p>
-                Upload your resume and job description.
-                Our AI agents analyze your profile and generate
-                personalized interview questions.
-            </p>
-
-        </section>
-
-
-        <!-- UPLOAD SECTION -->
-
-        <section class="upload-section">
-
-            <!-- RESUME -->
-
-            <div class="upload-card" id="resumeCard">
-
-                <div class="card-top">
-
-                    <div class="file-icon resume-icon">
-                        📄
+                    <div class="eyebrow">
+                        INTERVIEW PREPARATION PLATFORM
                     </div>
 
-                    <div class="card-label">
-                        REQUIRED
+                    <h1>
+                        Prepare better for your
+                        <span>next interview.</span>
+                    </h1>
+
+                    <p class="hero-description">
+                        Upload your resume and job description to get
+                        personalized interview questions based on your
+                        skills, projects and the job requirements.
+                    </p>
+
+                    <div class="hero-buttons">
+                        <a href="#upload-section" class="primary-btn">
+                            Get Started
+                        </a>
+
+                        <a href="#how-it-works" class="secondary-btn">
+                            How it works
+                        </a>
                     </div>
 
                 </div>
 
-                <h2>Your Resume</h2>
 
-                <p class="card-description">
-                    Upload your latest resume in PDF format.
+                <div class="hero-preview">
+
+                    <div class="preview-window">
+
+                        <div class="preview-header">
+                            <div class="window-dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+
+                            <span>HirePrep</span>
+                        </div>
+
+                        <div class="preview-body">
+
+                            <div class="preview-resume">
+                                <div class="preview-icon">PDF</div>
+
+                                <div>
+                                    <strong>Resume.pdf</strong>
+                                    <small>Uploaded successfully</small>
+                                </div>
+                            </div>
+
+                            <div class="preview-line"></div>
+
+                            <div class="preview-title">
+                                Interview Questions
+                            </div>
+
+                            <div class="preview-question">
+                                <span>01</span>
+                                <p>Tell me about one of your projects.</p>
+                            </div>
+
+                            <div class="preview-question">
+                                <span>02</span>
+                                <p>How did you use your technical skills?</p>
+                            </div>
+
+                            <div class="preview-question">
+                                <span>03</span>
+                                <p>Why are you interested in this role?</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Features -->
+        <section class="features-section" id="features">
+
+            <div class="section-heading">
+                <p class="section-label">WHAT HIREPREP DOES</p>
+
+                <h2>
+                    Everything you need to prepare
+                </h2>
+
+                <p>
+                    A simple workflow that turns your resume and job
+                    description into useful interview preparation.
+                </p>
+            </div>
+
+
+            <div class="feature-grid">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon blue">
+                        UP
+                    </div>
+
+                    <h3>Upload your documents</h3>
+
+                    <p>
+                        Upload your resume and the job description
+                        you are preparing for.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon purple">
+                        AI
+                    </div>
+
+                    <h3>Analyze your profile</h3>
+
+                    <p>
+                        The system extracts your skills, projects,
+                        experience and relevant job requirements.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon green">
+                        Q
+                    </div>
+
+                    <h3>Get interview questions</h3>
+
+                    <p>
+                        Receive questions based on your resume and
+                        the requirements of the selected job.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Upload Section -->
+        <section class="upload-section" id="upload-section">
+
+            <div class="section-heading">
+                <p class="section-label">START PREPARING</p>
+
+                <h2>
+                    Upload your documents
+                </h2>
+
+                <p>
+                    Provide your resume and job description to begin
+                    the analysis.
+                </p>
+            </div>
+
+
+            <div class="upload-grid">
+
+                <!-- Resume -->
+                <div class="upload-card">
+
+                    <div class="upload-card-top">
+                        <div class="document-icon">
+                            PDF
+                        </div>
+
+                        <span class="required-badge">
+                            Required
+                        </span>
+                    </div>
+
+                    <h3>Resume</h3>
+
+                    <p>
+                        Upload your latest resume in PDF format.
+                    </p>
+
+                    <label class="file-input">
+                        <input
+                            type="file"
+                            id="resumeFile"
+                            accept=".pdf"
+                        >
+
+                        <span class="file-button">
+                            Choose Resume
+                        </span>
+
+                        <span class="file-name">
+                            No file selected
+                        </span>
+                    </label>
+
+                </div>
+
+
+                <!-- Job Description -->
+                <div class="upload-card">
+
+                    <div class="upload-card-top">
+                        <div class="document-icon job">
+                            JD
+                        </div>
+
+                        <span class="required-badge">
+                            Required
+                        </span>
+                    </div>
+
+                    <h3>Job Description</h3>
+
+                    <p>
+                        Upload the job description you want to
+                        prepare for.
+                    </p>
+
+                    <label class="file-input">
+                        <input
+                            type="file"
+                            id="jdFile"
+                            accept=".pdf"
+                        >
+
+                        <span class="file-button">
+                            Choose Job Description
+                        </span>
+
+                        <span class="file-name">
+                            No file selected
+                        </span>
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <div class="analyze-wrapper">
+
+                <button id="analyzeBtn" class="analyze-btn">
+                    Analyze & Generate Questions
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- Processing -->
+        <section id="processing" class="processing-section">
+
+            <div class="processing-box">
+
+                <div class="loader"></div>
+
+                <h2>Analyzing your profile</h2>
+
+                <p id="processingStatus">
+                    Preparing your documents...
                 </p>
 
-                <label for="resumeFile" class="drop-zone">
+                <div class="processing-steps">
 
-                    <div class="upload-symbol">
-                        ↑
+                    <div class="processing-step active">
+                        <span>1</span>
+                        Resume Analysis
                     </div>
 
-                    <strong>Choose Resume PDF</strong>
+                    <div class="processing-step">
+                        <span>2</span>
+                        Job Description Analysis
+                    </div>
 
-                    <span>
-                        Click to browse or drag & drop
-                    </span>
+                    <div class="processing-step">
+                        <span>3</span>
+                        Question Generation
+                    </div>
 
-                </label>
-
-                <input
-                    type="file"
-                    id="resumeFile"
-                    accept=".pdf"
-                    hidden
-                >
-
-                <div class="selected-file" id="resumeSelected">
-                    <span>○</span>
-                    <span>No file selected</span>
                 </div>
 
             </div>
 
+        </section>
 
-            <!-- JOB DESCRIPTION -->
 
-            <div class="upload-card" id="jdCard">
+        <!-- Results -->
+        <section id="result" class="results-section">
 
-                <div class="card-top">
+            <div class="results-heading">
 
-                    <div class="file-icon jd-icon">
-                        💼
-                    </div>
+                <p class="section-label">ANALYSIS COMPLETE</p>
 
-                    <div class="card-label">
-                        REQUIRED
-                    </div>
+                <h2>Your Interview Preparation</h2>
 
-                </div>
-
-                <h2>Job Description</h2>
-
-                <p class="card-description">
-                    Upload the job description as a PDF.
+                <p>
+                    Review the information extracted from your
+                    resume and the questions generated for your role.
                 </p>
 
-                <label for="jdFile" class="drop-zone">
+            </div>
 
-                    <div class="upload-symbol">
-                        ↑
-                    </div>
 
-                    <strong>Choose JD PDF</strong>
+            <div class="results-grid">
 
-                    <span>
-                        Click to browse or drag & drop
-                    </span>
+                <div class="result-card">
 
-                </label>
+                    <h3>Candidate Information</h3>
 
-                <input
-                    type="file"
-                    id="jdFile"
-                    accept=".pdf"
-                    hidden
-                >
+                    <div id="candidate"></div>
 
-                <div class="selected-file" id="jdSelected">
-                    <span>○</span>
-                    <span>No file selected</span>
+                </div>
+
+
+                <div class="result-card">
+
+                    <h3>Skills</h3>
+
+                    <div id="skills"></div>
+
+                </div>
+
+
+                <div class="result-card">
+
+                    <h3>Projects</h3>
+
+                    <div id="projects"></div>
+
+                </div>
+
+
+                <div class="result-card">
+
+                    <h3>Experience</h3>
+
+                    <div id="experience"></div>
+
+                </div>
+
+
+                <div class="result-card">
+
+                    <h3>Certifications</h3>
+
+                    <div id="certifications"></div>
+
+                </div>
+
+
+                <div class="result-card">
+
+                    <h3>Strengths</h3>
+
+                    <div id="strengths"></div>
+
+                </div>
+
+
+                <div class="result-card">
+
+                    <h3>Skill Gaps</h3>
+
+                    <div id="skillGaps"></div>
+
                 </div>
 
             </div>
@@ -172,106 +435,64 @@
         </section>
 
 
-        <!-- GENERATE BUTTON -->
+        <!-- How it works -->
+        <section class="how-section" id="how-it-works">
 
-        <section class="action-section">
+            <div class="section-heading">
 
-            <button id="analyzeBtn" class="generate-btn">
+                <p class="section-label">HOW IT WORKS</p>
 
-                <span>✦</span>
+                <h2>Three simple steps</h2>
 
-                <span>Analyze & Generate Questions</span>
-
-                <span class="arrow">→</span>
-
-            </button>
-
-            <p id="status" class="status">
-                Upload both PDF files to begin.
-            </p>
-
-        </section>
-
-
-        <!-- AI PROCESSING -->
-
-        <section id="processing" class="processing hidden">
-
-            <div class="processing-header">
-                <div class="ai-loader">✦</div>
-
-                <div>
-                    <h3>AI is analyzing your profile</h3>
-                    <p>This may take a few moments...</p>
-                </div>
-            </div>
-
-            <div class="agent-steps">
-
-                <div class="agent-step">
-                    <span class="step-icon">✓</span>
-
-                    <div>
-                        <strong>Resume Analyzer</strong>
-                        <span>Extracting skills and experience</span>
-                    </div>
-                </div>
-
-                <div class="agent-step">
-                    <span class="step-icon">✓</span>
-
-                    <div>
-                        <strong>Job Description Analyzer</strong>
-                        <span>Identifying role requirements</span>
-                    </div>
-                </div>
-
-                <div class="agent-step active">
-                    <span class="step-icon">✦</span>
-
-                    <div>
-                        <strong>Question Generator</strong>
-                        <span>Preparing personalized questions</span>
-                    </div>
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- RESULT -->
-
-        <section id="result" class="result hidden">
-
-            <div class="result-header">
-
-                <div>
-                    <div class="section-label">
-                        AI ANALYSIS
-                    </div>
-
-                    <h2>Resume Analysis</h2>
-                </div>
+                <p>
+                    HirePrep connects your resume, the job description
+                    and AI-generated interview preparation.
+                </p>
 
             </div>
 
 
-            <div class="result-grid">
+            <div class="steps-grid">
 
-                <div id="candidate"></div>
+                <div class="step">
 
-                <div id="skills"></div>
+                    <div class="step-number">01</div>
 
-                <div id="projects"></div>
+                    <h3>Upload</h3>
 
-                <div id="experience"></div>
+                    <p>
+                        Provide your resume and target job description.
+                    </p>
 
-                <div id="certifications"></div>
+                </div>
 
-                <div id="strengths"></div>
 
-                <div id="skillGaps"></div>
+                <div class="step">
+
+                    <div class="step-number">02</div>
+
+                    <h3>Analyze</h3>
+
+                    <p>
+                        AI agents identify relevant skills,
+                        experience and requirements.
+                    </p>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">03</div>
+
+                    <h3>Practice</h3>
+
+                    <p>
+                        Use personalized interview questions to
+                        prepare for the role.
+                    </p>
+
+                </div>
 
             </div>
 
@@ -280,10 +501,15 @@
     </main>
 
 
-    <footer>
-        <span>InterviewAI</span>
-        <span>•</span>
-        <span>Powered by Multi-Agent AI</span>
+    <footer class="footer">
+
+        <div>
+            <strong>HirePrep</strong>
+            <span> · Multi-Agent Interview System</span>
+        </div>
+
+        <span>Interview preparation made simple.</span>
+
     </footer>
 
 

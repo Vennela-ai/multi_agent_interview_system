@@ -664,3 +664,31 @@ function escapeHtml(value) {
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
 }
+const resumeInput = document.getElementById("resumeFile");
+const jdInput = document.getElementById("jdFile");
+
+if (resumeInput) {
+    resumeInput.addEventListener("change", function () {
+        const name = this.files.length
+            ? this.files[0].name
+            : "No file selected";
+
+        const fileName = this.closest(".file-input")
+            .querySelector(".file-name");
+
+        fileName.textContent = name;
+    });
+}
+
+if (jdInput) {
+    jdInput.addEventListener("change", function () {
+        const name = this.files.length
+            ? this.files[0].name
+            : "No file selected";
+
+        const fileName = this.closest(".file-input")
+            .querySelector(".file-name");
+
+        fileName.textContent = name;
+    });
+}
