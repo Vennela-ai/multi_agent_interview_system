@@ -12,7 +12,7 @@ from backend.agents.question_generator import generate_questions
 
 app = FastAPI(
     title="Multi-Agent Interview System",
-    description="Resume and Job Description Analyser API",
+    description="Multi-Agent Resume, Job Description and Interview Question Generation System",
     version="0.1.0"
 )
 
@@ -42,7 +42,7 @@ app.add_middleware(
 @app.get("/")
 def home():
     return {
-        "message": "Resume Analyser Agent is running"
+       "message": "Multi-Agent Interview System is running"
     }
 
 
