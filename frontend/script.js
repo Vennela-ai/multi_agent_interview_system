@@ -1,4 +1,87 @@
 const API_BASE_URL = "http://127.0.0.1:8000";
+// ==========================================
+// DOM & DISPLAY HELPERS
+// ==========================================
+
+function getElement(id) {
+    return document.getElementById(id);
+}
+
+function storeData(key, data) {
+    localStorage.setItem(
+        key,
+        JSON.stringify(data)
+    );
+}
+
+function getStoredData(key) {
+    const data = localStorage.getItem(key);
+
+    if (!data) {
+        return null;
+    }
+
+    try {
+        return JSON.parse(data);
+    } catch (error) {
+        console.error(
+            `Unable to parse stored data for ${key}:`,
+            error
+        );
+
+        return null;
+    }
+}
+function escapeHTML(value) {
+    if (value === null || value === undefined) {
+        return "";
+    }
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function displayValue(value) {
+    if (
+        value === null ||
+        value === undefined ||
+        value === ""
+    ) {
+        return "Not available";
+    }
+
+    return escapeHTML(value);
+}
+
+function displayList(value) {
+    if (!Array.isArray(value) || value.length === 0) {
+        return "<p>Not available</p>";
+    }
+
+    return `
+        <ul>
+            ${value.map(item => `
+                <li>${escapeHTML(item)}</li>
+            `).join("")}
+        </ul>
+    `;
+}
+
+function createTags(items) {
+    if (!Array.isArray(items) || items.length === 0) {
+        return "";
+    }
+
+    return items.map(item => `
+        <span class="tag">
+            ${escapeHTML(item)}
+        </span>
+    `).join("");
+}
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -991,289 +1074,239 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+// ==========================================
+// JD RESULTS PAGE
+// ==========================================
 
-    // =========================================================
-    // JD RESULTS PAGE
-    // =========================================================
+const jdJobDetails =
+    getElement("jdJobDetails");
 
-    if (getElement("jdJobDetails")) {
+if (jdJobDetails) {
 
-        console.log(
-            "Loading JD results page..."
+    const jdAnalysis =
+        getStoredData("jdAnalysis");
+
+    if (!jdAnalysis) {
+
+        alert(
+            "Job description analysis is not available."
         );
 
+        window.location.href =
+            "analyze.html";
 
-        const jdAnalysis =
-            getStoredData("jdAnalysis");
+    } else {
 
+        // ------------------------------------------
+        // Job Details
+        // ------------------------------------------
 
-        if (!jdAnalysis) {
+        const job =
+            jdAnalysis.job || {};
 
-            console.warn(
-                "No JD analysis found."
-            );
+        jdJobDetails.innerHTML = `
 
-        } else {
+            <div class="detail-row">
+                <strong>Job Title</strong>
+                <span>
+                    ${displayValue(job.job_title)}
+                </span>
+            </div>
 
-            // =================================================
-            // HELPER FOR JD DATA
-            // =================================================
+            <div class="detail-row">
+                <strong>Company</strong>
+                <span>
+                    ${displayValue(job.company)}
+                </span>
+            </div>
 
-            function findJDValue(...keys) {
+            <div class="detail-row">
+                <strong>Location</strong>
+                <span>
+                    ${displayValue(job.location)}
+                </span>
+            </div>
 
-                for (const key of keys) {
-
-                    if (
-                        jdAnalysis[key] !== undefined &&
-                        jdAnalysis[key] !== null &&
-                        jdAnalysis[key] !== ""
-                    ) {
-
-                        return jdAnalysis[key];
+            <div class="detail-row">
+                <strong>Experience</strong>
+                <span>
+                    ${
+                        job.experience_required
+                            ? displayValue(
+                                job.experience_required
+                            )
+                            : "Not specified"
                     }
-                }
+                </span>
+            </div>
 
-                return null;
-            }
+        `;
 
 
-            // =================================================
-            // JOB DETAILS
-            // =================================================
+        // ------------------------------------------
+        // Skills
+        // ------------------------------------------
 
-            const jdJobDetails =
-                getElement("jdJobDetails");
+        const skills =
+            jdAnalysis.skills || {};
 
 
-            if (jdJobDetails) {
+        const jdRequiredSkills =
+            getElement("jdRequiredSkills");
 
-                const value =
-                    findJDValue(
-                        "job_details",
-                        "jobDetails",
-                        "job",
-                        "role",
-                        "position"
-                    );
+        if (jdRequiredSkills) {
 
+            jdRequiredSkills.innerHTML =
+                createTags(
+                    skills.required || []
+                );
 
-                jdJobDetails.innerHTML =
-                    displayValue(value);
-            }
-
-
-            // =================================================
-            // REQUIRED SKILLS
-            // =================================================
-
-            const jdRequiredSkills =
-                getElement("jdRequiredSkills");
-
-
-            if (jdRequiredSkills) {
-
-                const value =
-                    findJDValue(
-                        "required_skills",
-                        "requiredSkills",
-                        "skills",
-                        "technical_skills"
-                    );
-
-
-                jdRequiredSkills.innerHTML =
-                    displayList(value);
-            }
-
-
-            // =================================================
-            // PREFERRED SKILLS
-            // =================================================
-
-            const jdPreferredSkills =
-                getElement("jdPreferredSkills");
-
-
-            if (jdPreferredSkills) {
-
-                const value =
-                    findJDValue(
-                        "preferred_skills",
-                        "preferredSkills",
-                        "preferred_qualifications"
-                    );
-
-
-                jdPreferredSkills.innerHTML =
-                    displayList(value);
-            }
-
-
-            // =================================================
-            // PROGRAMMING LANGUAGES
-            // =================================================
-
-            const jdLanguages =
-                getElement("jdLanguages");
-
-
-            if (jdLanguages) {
-
-                const value =
-                    findJDValue(
-                        "languages",
-                        "programming_languages",
-                        "programmingLanguages"
-                    );
-
-
-                jdLanguages.innerHTML =
-                    displayList(value);
-            }
-
-
-            // =================================================
-            // TOOLS & TECHNOLOGIES
-            // =================================================
-
-            const jdTools =
-                getElement("jdTools");
-
-
-            if (jdTools) {
-
-                const value =
-                    findJDValue(
-                        "tools_and_technologies",
-                        "toolsAndTechnologies",
-                        "tools",
-                        "technologies"
-                    );
-
-
-                jdTools.innerHTML =
-                    displayList(value);
-            }
-
-
-            // =================================================
-            // EDUCATION
-            // =================================================
-
-            const jdEducation =
-                getElement("jdEducation");
-
-
-            if (jdEducation) {
-
-                const value =
-                    findJDValue(
-                        "education",
-                        "educational_qualification",
-                        "educationalQualification"
-                    );
-
-
-                jdEducation.innerHTML =
-                    displayList(value);
-            }
-
-
-            // =================================================
-            // RESPONSIBILITIES
-            // =================================================
-
-            const jdResponsibilities =
-                getElement("jdResponsibilities");
-
-
-            if (jdResponsibilities) {
-
-                const value =
-                    findJDValue(
-                        "responsibilities",
-                        "job_responsibilities",
-                        "jobResponsibilities"
-                    );
-
-
-                jdResponsibilities.innerHTML =
-                    displayList(value);
-            }
-
-
-            // =================================================
-            // QUALIFICATIONS
-            // =================================================
-
-            const jdQualifications =
-                getElement("jdQualifications");
-
-
-            if (jdQualifications) {
-
-                const value =
-                    findJDValue(
-                        "qualifications",
-                        "requirements",
-                        "minimum_qualifications",
-                        "minimumQualifications"
-                    );
-
-
-                jdQualifications.innerHTML =
-                    displayList(value);
-            }
-
-
-            // =================================================
-            // DOMAIN
-            // =================================================
-
-            const jdDomain =
-                getElement("jdDomain");
-
-
-            if (jdDomain) {
-
-                const value =
-                    findJDValue(
-                        "domain",
-                        "industry",
-                        "job_domain"
-                    );
-
-
-                jdDomain.innerHTML =
-                    displayValue(value);
-            }
-
-
-            // =================================================
-            // KEYWORDS
-            // =================================================
-
-            const jdKeywords =
-                getElement("jdKeywords");
-
-
-            if (jdKeywords) {
-
-                const value =
-                    findJDValue(
-                        "keywords",
-                        "key_words",
-                        "keyWords"
-                    );
-
-
-                jdKeywords.innerHTML =
-                    displayList(value);
-            }
         }
+
+
+        const jdPreferredSkills =
+            getElement("jdPreferredSkills");
+
+        if (jdPreferredSkills) {
+
+            jdPreferredSkills.innerHTML =
+                createTags(
+                    skills.preferred || []
+                );
+
+        }
+
+
+        const jdLanguages =
+            getElement("jdLanguages");
+
+        if (jdLanguages) {
+
+            jdLanguages.innerHTML =
+                createTags(
+                    skills.programming_languages || []
+                );
+
+        }
+
+
+        const jdTools =
+            getElement("jdTools");
+
+        if (jdTools) {
+
+            jdTools.innerHTML =
+                createTags(
+                    skills.tools_and_technologies || []
+                );
+
+        }
+
+
+        // ------------------------------------------
+        // Education Requirements
+        // ------------------------------------------
+
+        const jdEducation =
+            getElement("jdEducation");
+
+        if (jdEducation) {
+
+            jdEducation.innerHTML =
+                displayList(
+                    jdAnalysis.education_requirements || []
+                );
+
+        }
+
+
+        // ------------------------------------------
+        // Responsibilities
+        // ------------------------------------------
+
+        const jdResponsibilities =
+            getElement("jdResponsibilities");
+
+        if (jdResponsibilities) {
+
+            jdResponsibilities.innerHTML =
+                displayList(
+                    jdAnalysis.responsibilities || []
+                );
+
+        }
+
+
+        // ------------------------------------------
+        // Qualifications
+        // ------------------------------------------
+
+        const jdQualifications =
+            getElement("jdQualifications");
+
+        if (jdQualifications) {
+
+            jdQualifications.innerHTML =
+                displayList(
+                    jdAnalysis.qualifications || []
+                );
+
+        }
+
+
+        // ------------------------------------------
+        // Certifications
+        // ------------------------------------------
+
+        const jdCertifications =
+            getElement("jdCertifications");
+
+        if (jdCertifications) {
+
+            jdCertifications.innerHTML =
+                displayList(
+                    jdAnalysis.certifications || []
+                );
+
+        }
+
+
+        // ------------------------------------------
+        // Domain Knowledge
+        // ------------------------------------------
+
+        const jdDomain =
+            getElement("jdDomain");
+
+        if (jdDomain) {
+
+            jdDomain.innerHTML =
+                createTags(
+                    jdAnalysis.domain_knowledge || []
+                );
+
+        }
+
+
+        // ------------------------------------------
+        // Keywords
+        // ------------------------------------------
+
+        const jdKeywords =
+            getElement("jdKeywords");
+
+        if (jdKeywords) {
+
+            jdKeywords.innerHTML =
+                createTags(
+                    jdAnalysis.keywords || []
+                );
+
+        }
+
     }
 
-
+}
     // =========================================================
     // GENERATE QUESTIONS BUTTON
     // =========================================================
@@ -1696,3 +1729,867 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
 });
+// ==========================================
+// GENERATE JD-TAILORED RESUME
+// ==========================================
+
+const generateResumeBtn =
+    getElement("generateResumeBtn");
+
+if (generateResumeBtn) {
+
+    generateResumeBtn.addEventListener(
+        "click",
+        async () => {
+
+            const resumeAnalysis =
+                getStoredData("resumeAnalysis");
+
+            const jdAnalysis =
+                getStoredData("jdAnalysis");
+
+            if (!resumeAnalysis) {
+                alert(
+                    "Resume analysis is not available."
+                );
+                return;
+            }
+
+            if (!jdAnalysis) {
+                alert(
+                    "Job description analysis is not available."
+                );
+                return;
+            }
+
+            const originalButtonText =
+                generateResumeBtn.innerHTML;
+
+            generateResumeBtn.disabled = true;
+
+            generateResumeBtn.innerHTML = `
+                Generating Resume...
+                <span>⏳</span>
+            `;
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${API_BASE_URL}/generate-tailored-resume`,
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+                            body: JSON.stringify({
+                                resume_analysis:
+                                    resumeAnalysis,
+
+                                jd_analysis:
+                                    jdAnalysis
+                            })
+                        }
+                    );
+
+                if (!response.ok) {
+
+                    const errorText =
+                        await response.text();
+
+                    throw new Error(
+                        `Resume generation failed (${response.status}): ${errorText}`
+                    );
+                }
+
+                const tailoredResume =
+                    await response.json();
+
+                if (tailoredResume.error) {
+
+                    throw new Error(
+                        tailoredResume.error
+                    );
+                }
+
+                // Store generated resume
+                storeData(
+                    "tailoredResume",
+                    tailoredResume
+                );
+
+                // Open tailored resume page
+                window.location.href =
+                    "tailored-resume.html";
+
+            } catch (error) {
+
+                console.error(
+                    "Tailored resume generation error:",
+                    error
+                );
+
+                alert(
+                    "Unable to generate the tailored resume.\n\n" +
+                    error.message +
+                    "\n\nPlease make sure the FastAPI backend is running."
+                );
+
+                generateResumeBtn.disabled =
+                    false;
+
+                generateResumeBtn.innerHTML =
+                    originalButtonText;
+            }
+        }
+    );
+}
+// ==========================================
+// TAILORED RESUME PAGE
+// ==========================================
+
+const resumeName =
+    getElement("resumeName");
+
+if (resumeName) {
+
+    const tailoredResume =
+        getStoredData("tailoredResume");
+
+    if (!tailoredResume) {
+
+        alert(
+            "Tailored resume data is not available."
+        );
+
+        window.location.href =
+            "jd-results.html";
+
+    } else {
+
+        // ------------------------------------------
+        // Candidate
+        // ------------------------------------------
+
+        const candidate =
+            tailoredResume.candidate || {};
+
+        resumeName.textContent =
+            displayValue(candidate.name);
+
+
+        const contactParts = [];
+
+        if (candidate.email) {
+            contactParts.push(candidate.email);
+        }
+
+        if (candidate.phone) {
+            contactParts.push(candidate.phone);
+        }
+
+        if (candidate.location) {
+            contactParts.push(candidate.location);
+        }
+
+        const resumeContact =
+            getElement("resumeContact");
+
+        if (resumeContact) {
+
+            resumeContact.textContent =
+                contactParts.join(" | ");
+
+        }
+
+
+        // ------------------------------------------
+        // Summary
+        // ------------------------------------------
+
+        const resumeSummary =
+            getElement("resumeSummary");
+
+        if (resumeSummary) {
+
+            resumeSummary.textContent =
+                displayValue(
+                    tailoredResume.summary
+                );
+
+        }
+
+
+        // ------------------------------------------
+        // Skills
+        // ------------------------------------------
+
+        const skills =
+            tailoredResume.skills || {};
+
+        const technical =
+            skills.technical || [];
+
+        const programmingLanguages =
+            skills.programming_languages || [];
+
+        const tools =
+            skills.tools_and_technologies || [];
+
+        const resumeSkills =
+            getElement("resumeSkills");
+
+        if (resumeSkills) {
+
+            resumeSkills.innerHTML = `
+
+                <div class="resume-skill-group">
+
+                    <strong>
+                        Technical Skills
+                    </strong>
+
+                    <div class="resume-tags">
+
+                        ${createTags(
+                            technical
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="resume-skill-group">
+
+                    <strong>
+                        Programming Languages
+                    </strong>
+
+                    <div class="resume-tags">
+
+                        ${createTags(
+                            programmingLanguages
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="resume-skill-group">
+
+                    <strong>
+                        Tools & Technologies
+                    </strong>
+
+                    <div class="resume-tags">
+
+                        ${createTags(
+                            tools
+                        )}
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+
+
+        // ------------------------------------------
+        // Education
+        // ------------------------------------------
+        const resumeEducation =
+        getElement("resumeEducation");
+    
+    if (resumeEducation) {
+    
+        const education =
+            tailoredResume.education || [];
+    
+        if (education.length === 0) {
+    
+            resumeEducation.innerHTML =
+                "<p>No education details available.</p>";
+    
+        } else {
+    
+            resumeEducation.innerHTML =
+                education.map(item => {
+    
+                    if (typeof item === "string") {
+    
+                        return `
+                            <div class="resume-education-item">
+                                ${escapeHTML(item)}
+                            </div>
+                        `;
+    
+                    }
+    
+                    if (typeof item === "object" && item !== null) {
+    
+                        const degree =
+                            item.degree ||
+                            item.course ||
+                            item.program ||
+                            "";
+    
+                        const institution =
+                            item.institution ||
+                            item.college ||
+                            item.university ||
+                            "";
+    
+                        const duration =
+                            item.duration ||
+                            item.year ||
+                            item.years ||
+                            "";
+    
+                        const grade =
+                            item.cgpa ||
+                            item.gpa ||
+                            item.grade ||
+                            "";
+    
+                        return `
+                            <div class="resume-education-item">
+    
+                                ${
+                                    degree
+                                        ? `<div class="resume-item-title">
+                                            ${escapeHTML(degree)}
+                                          </div>`
+                                        : ""
+                                }
+    
+                                ${
+                                    institution
+                                        ? `<div class="resume-item-meta">
+                                            ${escapeHTML(institution)}
+                                          </div>`
+                                        : ""
+                                }
+    
+                                ${
+                                    duration
+                                        ? `<div class="resume-item-meta">
+                                            ${escapeHTML(duration)}
+                                          </div>`
+                                        : ""
+                                }
+    
+                                ${
+                                    grade
+                                        ? `<div class="resume-item-meta">
+                                            ${escapeHTML(grade)}
+                                          </div>`
+                                        : ""
+                                }
+    
+                            </div>
+                        `;
+    
+                    }
+    
+                    return "";
+    
+                }).join("");
+    
+        }
+    
+    }
+
+
+        // ------------------------------------------
+        // Projects
+        // ------------------------------------------
+
+        const resumeProjects =
+            getElement("resumeProjects");
+
+        if (resumeProjects) {
+
+            const projects =
+                tailoredResume.projects || [];
+
+            if (projects.length === 0) {
+
+                resumeProjects.innerHTML =
+                    "<p>No projects available.</p>";
+
+            } else {
+
+                resumeProjects.innerHTML =
+                    projects.map(project => {
+
+                        const technologies =
+                            project.technologies || [];
+
+                        return `
+
+                            <div class="resume-item">
+
+                                <div class="resume-item-title">
+                                    ${escapeHTML(
+                                        project.name
+                                    )}
+                                </div>
+
+                                <div class="resume-item-tech">
+                                    ${createTags(
+                                        technologies
+                                    )}
+                                </div>
+
+                                <p>
+                                    ${escapeHTML(
+                                        project.description
+                                    )}
+                                </p>
+
+                            </div>
+
+                        `;
+
+                    }).join("");
+
+            }
+
+        }
+
+
+        // ------------------------------------------
+        // Internships
+        // ------------------------------------------
+
+        const resumeInternships =
+            getElement("resumeInternships");
+
+        if (resumeInternships) {
+
+            const internships =
+                tailoredResume.internships || [];
+
+            if (internships.length === 0) {
+
+                resumeInternships.innerHTML =
+                    "<p>No internships available.</p>";
+
+            } else {
+
+                resumeInternships.innerHTML =
+                    internships.map(internship => {
+
+                        return `
+
+                            <div class="resume-item">
+
+                                <div class="resume-item-title">
+                                    ${escapeHTML(
+                                        internship.title
+                                    )}
+                                </div>
+
+                                <div class="resume-item-meta">
+                                    ${escapeHTML(
+                                        internship.company
+                                    )}
+                                    ·
+                                    ${escapeHTML(
+                                        internship.duration
+                                    )}
+                                </div>
+
+                                <p>
+                                    ${escapeHTML(
+                                        internship.description
+                                    )}
+                                </p>
+
+                            </div>
+
+                        `;
+
+                    }).join("");
+
+            }
+
+        }
+
+
+        // ------------------------------------------
+        // Certifications
+        // ------------------------------------------
+
+        const resumeCertifications =
+            getElement("resumeCertifications");
+
+        if (resumeCertifications) {
+
+            const certifications =
+                tailoredResume.certifications || [];
+
+            resumeCertifications.innerHTML =
+                displayList(certifications);
+
+        }
+
+
+        // ------------------------------------------
+        // Achievements
+        // ------------------------------------------
+
+        const resumeAchievements =
+            getElement("resumeAchievements");
+
+        if (resumeAchievements) {
+
+            const achievements =
+                tailoredResume.achievements || [];
+
+            resumeAchievements.innerHTML =
+                displayList(achievements);
+
+        }
+
+    }
+
+}
+// ==========================================
+// DOWNLOAD JD-TAILORED RESUME
+// ==========================================
+
+const downloadResumeBtn =
+    getElement("downloadResumeBtn");
+
+if (downloadResumeBtn) {
+
+    downloadResumeBtn.addEventListener(
+        "click",
+        async () => {
+
+            const tailoredResume =
+                getStoredData("tailoredResume");
+
+            if (!tailoredResume) {
+
+                alert(
+                    "Tailored resume data is not available."
+                );
+
+                return;
+            }
+
+            const originalButtonText =
+                downloadResumeBtn.innerHTML;
+
+            downloadResumeBtn.disabled = true;
+
+            downloadResumeBtn.innerHTML = `
+                Preparing PDF...
+                <span>⏳</span>
+            `;
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${API_BASE_URL}/download-tailored-resume`,
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+                                tailored_resume:
+                                    tailoredResume
+                            })
+                        }
+                    );
+
+                if (!response.ok) {
+
+                    const errorText =
+                        await response.text();
+
+                    throw new Error(
+                        `PDF download failed (${response.status}): ${errorText}`
+                    );
+                }
+
+                const blob =
+                    await response.blob();
+
+                const url =
+                    window.URL.createObjectURL(blob);
+
+                const link =
+                    document.createElement("a");
+
+                link.href = url;
+
+                link.download =
+                    "JD_Tailored_Resume.pdf";
+
+                document.body.appendChild(link);
+
+                link.click();
+
+                link.remove();
+
+                window.URL.revokeObjectURL(url);
+
+            } catch (error) {
+
+                console.error(
+                    "PDF download error:",
+                    error
+                );
+
+                alert(
+                    "Unable to download the resume.\n\n" +
+                    error.message
+                );
+
+            } finally {
+
+                downloadResumeBtn.disabled =
+                    false;
+
+                downloadResumeBtn.innerHTML =
+                    originalButtonText;
+            }
+        }
+    );
+}
+// ==========================================
+// EDIT TAILORED RESUME
+// ==========================================
+
+const editResumeBtn =
+    getElement("editResumeBtn");
+
+const saveResumeBtn =
+    getElement("saveResumeBtn");
+
+if (editResumeBtn && saveResumeBtn) {
+
+    editResumeBtn.addEventListener(
+        "click",
+        () => {
+
+            const editableFields = [
+                "resumeName",
+                "resumeContact",
+                "resumeSummary",
+                "resumeSkills",
+                "resumeEducation",
+                "resumeProjects",
+                "resumeInternships",
+                "resumeCertifications",
+                "resumeAchievements"
+            ];
+
+            editableFields.forEach(id => {
+
+                const element =
+                    getElement(id);
+
+                if (!element) {
+                    return;
+                }
+
+                element.contentEditable = "true";
+
+                element.classList.add(
+                    "resume-editable"
+                );
+
+            });
+
+            editResumeBtn.style.display =
+                "none";
+
+            saveResumeBtn.style.display =
+                "inline-flex";
+
+        }
+    );
+
+
+    saveResumeBtn.addEventListener(
+        "click",
+        () => {
+
+            const tailoredResume =
+                getStoredData("tailoredResume");
+
+            if (!tailoredResume) {
+
+                alert(
+                    "Tailored resume data is not available."
+                );
+
+                return;
+            }
+
+            // Candidate
+            const candidate =
+                tailoredResume.candidate || {};
+
+            const nameElement =
+                getElement("resumeName");
+
+            const contactElement =
+                getElement("resumeContact");
+
+            if (nameElement) {
+                candidate.name =
+                    nameElement.innerText.trim();
+            }
+
+            if (contactElement) {
+
+                const parts =
+                    contactElement.innerText
+                        .split("|")
+                        .map(item => item.trim())
+                        .filter(Boolean);
+
+                candidate.email =
+                    parts[0] || "";
+
+                candidate.phone =
+                    parts[1] || "";
+
+                candidate.location =
+                    parts[2] || "";
+            }
+
+            tailoredResume.candidate =
+                candidate;
+
+
+            // Summary
+            const summaryElement =
+                getElement("resumeSummary");
+
+            if (summaryElement) {
+
+                tailoredResume.summary =
+                    summaryElement.innerText.trim();
+            }
+
+
+            /*
+             * Save the edited resume HTML.
+             *
+             * This allows the edited version to remain
+             * available for PDF generation.
+             */
+
+            tailoredResume.editedHTML = {
+
+                name:
+                    nameElement
+                        ? nameElement.innerHTML
+                        : "",
+
+                contact:
+                    contactElement
+                        ? contactElement.innerHTML
+                        : "",
+
+                summary:
+                    summaryElement
+                        ? summaryElement.innerHTML
+                        : "",
+
+                skills:
+                    getElement("resumeSkills")
+                        ?.innerHTML || "",
+
+                education:
+                    getElement("resumeEducation")
+                        ?.innerHTML || "",
+
+                projects:
+                    getElement("resumeProjects")
+                        ?.innerHTML || "",
+
+                internships:
+                    getElement("resumeInternships")
+                        ?.innerHTML || "",
+
+                certifications:
+                    getElement("resumeCertifications")
+                        ?.innerHTML || "",
+
+                achievements:
+                    getElement("resumeAchievements")
+                        ?.innerHTML || ""
+
+            };
+
+
+            storeData(
+                "tailoredResume",
+                tailoredResume
+            );
+
+
+            // Disable editing
+            fields = [
+                "resumeName",
+                "resumeContact",
+                "resumeSummary",
+                "resumeSkills",
+                "resumeEducation",
+                "resumeProjects",
+                "resumeInternships",
+                "resumeCertifications",
+                "resumeAchievements"
+            ];
+
+            fields.forEach(id => {
+
+                const element =
+                    getElement(id);
+
+                if (!element) {
+                    return;
+                }
+
+                element.contentEditable =
+                    "false";
+
+                element.classList.remove(
+                    "resume-editable"
+                );
+
+            });
+
+
+            editResumeBtn.style.display =
+                "inline-flex";
+
+            saveResumeBtn.style.display =
+                "none";
+
+
+            alert(
+                "Resume changes saved successfully."
+            );
+
+        }
+    );
+
+}
