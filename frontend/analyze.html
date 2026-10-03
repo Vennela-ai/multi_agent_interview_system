@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>HirePrep | Analyze</title>
+
+    <link rel="stylesheet"
+        href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+
+    <header class="navbar">
+
+        <div class="nav-container">
+
+            <a href="index.html"
+                class="brand">
+
+                <div class="brand-logo">
+                    H
+                </div>
+
+                <div class="brand-info">
+
+                    <div class="brand-name">
+                        HirePrep
+                    </div>
+
+                    <div class="brand-subtitle">
+                        Interview Preparation
+                    </div>
+
+                </div>
+
+            </a>
+
+
+            <nav class="nav-links">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="index.html#features">
+                    Features
+                </a>
+
+                <a href="index.html#how-it-works">
+                    How It Works
+                </a>
+
+            </nav>
+
+
+            <a href="analyze.html"
+                class="nav-button">
+
+                Get Started
+
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         ANALYSIS PAGE
+    ========================== -->
+
+    <main>
+
+        <section class="analyze-page">
+
+            <div class="container">
+
+
+                <!-- PAGE HEADER -->
+
+                <div class="analyze-heading">
+
+                    <div class="section-label">
+                        STEP 01 · DOCUMENTS
+                    </div>
+
+                    <h1>
+                        Upload your documents.
+                    </h1>
+
+                    <p>
+                        Upload your resume and the job
+                        description you want to prepare for.
+                        HirePrep will analyze both documents
+                        and generate personalized interview
+                        questions.
+                    </p>
+
+                </div>
+
+
+                <!-- =========================
+                     UPLOAD GRID
+                ========================== -->
+
+                <div class="upload-grid">
+
+
+                    <!-- RESUME -->
+
+                    <div class="upload-card">
+
+                        <div class="upload-card-header">
+
+                            <div>
+
+                                <div class="upload-number">
+                                    01
+                                </div>
+
+                                <h2>
+                                    Resume
+                                </h2>
+
+                                <p>
+                                    Upload your latest resume
+                                    in PDF format.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <label
+                            for="resumeFile"
+                            class="upload-area">
+
+                            <div class="upload-icon">
+                                ↑
+                            </div>
+
+                            <strong>
+                                Choose Resume PDF
+                            </strong>
+
+                            <span>
+                                PDF files only
+                            </span>
+
+                        </label>
+
+
+                        <!-- REAL FILE INPUT -->
+
+                        <input
+                            type="file"
+                            id="resumeFile"
+                            name="resumeFile"
+                            accept=".pdf,application/pdf"
+                        >
+
+
+                        <div
+                            id="resumeFileName"
+                            class="selected-file">
+
+                            No file selected
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- JOB DESCRIPTION -->
+
+                    <div class="upload-card">
+
+                        <div class="upload-card-header">
+
+                            <div>
+
+                                <div class="upload-number">
+                                    02
+                                </div>
+
+                                <h2>
+                                    Job Description
+                                </h2>
+
+                                <p>
+                                    Upload the job description
+                                    for the role you are targeting.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <label
+                            for="jdFile"
+                            class="upload-area">
+
+                            <div class="upload-icon">
+                                ↑
+                            </div>
+
+                            <strong>
+                                Choose Job Description PDF
+                            </strong>
+
+                            <span>
+                                PDF files only
+                            </span>
+
+                        </label>
+
+
+                        <!-- REAL FILE INPUT -->
+
+                        <input
+                            type="file"
+                            id="jdFile"
+                            name="jdFile"
+                            accept=".pdf,application/pdf"
+                        >
+
+
+                        <div
+                            id="jdFileName"
+                            class="selected-file">
+
+                            No file selected
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     ANALYZE BUTTON
+                ========================== -->
+
+                <div class="analyze-action">
+
+                    <button
+                        type="button"
+                        id="analyzeBtn"
+                        class="primary-btn">
+
+                        Analyze Documents
+                        <span>→</span>
+
+                    </button>
+
+                </div>
+
+
+                <!-- =========================
+                     PROCESSING
+                ========================== -->
+
+                <div
+                    id="processing"
+                    class="processing"
+                    style="display: none;">
+
+                    <div class="processing-header">
+
+                        <div class="processing-spinner"></div>
+
+                        <div>
+
+                            <div class="section-label">
+                                PROCESSING
+                            </div>
+
+                            <h2>
+                                Analyzing your documents...
+                            </h2>
+
+                            <p id="processingStatus">
+                                Starting analysis...
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="processing-steps">
+
+                        <div class="processing-step">
+
+                            <span>
+                                01
+                            </span>
+
+                            <div>
+                                <strong>
+                                    Resume Analysis
+                                </strong>
+
+                                <p>
+                                    Extracting profile,
+                                    skills and experience.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="processing-step">
+
+                            <span>
+                                02
+                            </span>
+
+                            <div>
+                                <strong>
+                                    Job Analysis
+                                </strong>
+
+                                <p>
+                                    Identifying role requirements
+                                    and technologies.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="processing-step">
+
+                            <span>
+                                03
+                            </span>
+
+                            <div>
+                                <strong>
+                                    Question Generation
+                                </strong>
+
+                                <p>
+                                    Creating personalized
+                                    interview questions.
+                                </p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer class="footer">
+
+        <div class="container footer-content">
+
+            <div>
+
+                <strong>
+                    HirePrep
+                </strong>
+
+                <span>
+                    · Interview Preparation Platform
+                </span>
+
+            </div>
+
+            <span>
+                Prepare smarter. Practice with purpose.
+            </span>
+
+        </div>
+
+    </footer>
+
+
+    <!-- SCRIPT -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

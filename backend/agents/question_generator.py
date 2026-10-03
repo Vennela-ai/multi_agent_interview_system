@@ -1,6 +1,6 @@
 import json
 
-from backend.services.llm_service import ask_llm
+from services.llm_service import ask_llm
 
 
 def generate_questions(resume_analysis, jd_analysis):

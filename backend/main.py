@@ -3,11 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 import tempfile
 import os
 
-from backend.services.pdf_parser import extract_text_from_pdf
-from backend.services.document_parser import extract_text_from_document
-from backend.agents.resume_analyser import analyze_resume
-from backend.agents.jd_analyser import analyze_job_description
-from backend.agents.question_generator import generate_questions
+from services.pdf_parser import extract_text_from_pdf
+from services.document_parser import extract_text_from_document
+from agents.resume_analyser import analyze_resume
+from agents.jd_analyser import analyze_job_description
+from agents.question_generator import generate_questions
 
 
 app = FastAPI(
