@@ -1,0 +1,4 @@
+cloudinary-storing files
+resume-upload
+sppech-text(not now)last
+based on number of interviews change the summary

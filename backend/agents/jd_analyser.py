@@ -1,5 +1,5 @@
 import json
-from backend.services.llm_service import ask_llm
+from services.llm_service import ask_llm
 
 
 def analyze_job_description(job_description):
