@@ -1,410 +1,809 @@
 <!DOCTYPE html>
-<html lang="en">
 
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HirePrep - Upload Documents</title>
+    <link rel="stylesheet" href="style.css">
 
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
 
-    <title>HirePrep | Analyze</title>
+<style>
+    /* =========================
+       NAVBAR
+    ========================= */
+    .navbar {
+        width: 100%;
+        background: #ffffff;
+        border-bottom: 1px solid #e5e5e5;
+    }
 
-    <link rel="stylesheet"
-        href="style.css">
+    .navbar-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 18px 30px;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        box-sizing: border-box;
+    }
+
+    .brand {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 10px;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+    .brand-logo {
+        font-size: 28px;
+        font-weight: 700;
+        color: #111111;
+    }
+
+    .brand-name {
+        font-size: 21px;
+        font-weight: 700;
+        color: #111111;
+    }
+
+    .brand-tagline {
+        font-size: 14px;
+        color: #777777;
+    }
+
+    /* =========================
+       PAGE
+    ========================= */
+    .page-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 70px 30px;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 45px;
+    }
+
+    .page-header h1 {
+        margin: 0 0 15px;
+        font-size: 42px;
+        color: #111111;
+    }
+
+    .page-header p {
+        margin: 0 auto;
+        max-width: 650px;
+        font-size: 17px;
+        line-height: 1.6;
+        color: #666666;
+    }
+
+    /* =========================
+       UPLOAD CARDS
+    ========================= */
+    .upload-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+
+    .upload-card {
+        padding: 30px;
+        background: #ffffff;
+        border: 1px solid #e5e5e5;
+        border-radius: 12px;
+        box-sizing: border-box;
+    }
+
+    .upload-card h2 {
+        margin: 0 0 10px;
+        font-size: 21px;
+        color: #111111;
+    }
+
+    .required {
+        color: #d60000;
+        font-weight: 700;
+    }
+
+    .upload-card p {
+        margin: 0 0 22px;
+        color: #666666;
+        line-height: 1.6;
+    }
+
+    .upload-area {
+        padding: 30px 20px;
+        border: 2px dashed #cccccc;
+        border-radius: 10px;
+        text-align: center;
+        background: #fafafa;
+    }
+
+    .upload-area input[type="file"] {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .upload-button {
+        display: inline-block;
+        padding: 11px 22px;
+        border: none;
+        border-radius: 7px;
+        background: #111111;
+        color: #ffffff;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .upload-button:hover {
+        background: #333333;
+    }
+
+    /* =========================
+       UPLOAD STATUS MESSAGE
+    ========================= */
+    .upload-status {
+        margin-top: 12px;
+        min-height: 20px;
+        font-size: 14px;
+        font-weight: 500;
+        text-align: left;
+    }
+
+    .upload-status.success {
+        color: #16803c;
+    }
+
+    .upload-status.error {
+        color: #d60000;
+    }
+
+    /* =========================
+       TEXT INPUT
+    ========================= */
+    .text-input {
+        width: 100%;
+        min-height: 180px;
+        padding: 15px;
+        border: 1px solid #d5d5d5;
+        border-radius: 8px;
+        box-sizing: border-box;
+        font-family: inherit;
+        font-size: 15px;
+        resize: vertical;
+    }
+
+    .text-input:focus {
+        outline: none;
+        border-color: #777777;
+    }
+
+    .jd-text-status {
+        margin-top: 10px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    /* =========================
+       ACTION BUTTON
+    ========================= */
+    .action-section {
+        margin-top: 35px;
+        text-align: center;
+    }
+
+    .analyze-button {
+        display: inline-block;
+        padding: 14px 30px;
+        border: none;
+        border-radius: 8px;
+        background: #111111;
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .analyze-button:hover {
+        background: #333333;
+    }
+
+    /* =========================
+       BACK BUTTON
+    ========================= */
+    .top-back {
+        display: inline-block;
+        margin-bottom: 25px;
+        color: #333333;
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+    .top-back:hover {
+        color: #000000;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+    @media (max-width: 800px) {
+        .navbar-container {
+            flex-direction: column !important;
+            gap: 18px;
+        }
+
+        .upload-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .page-header h1 {
+            font-size: 34px;
+        }
+    }
+</style>
+
 </head>
 
 <body>
 
-    <!-- =========================
-         NAVIGATION
-    ========================== -->
+<!-- =========================
+     NAVBAR
+========================= -->
+<header class="navbar">
+    <div class="navbar-container">
+        <a href="index.html" class="brand">
+            <span class="brand-logo">H</span>
+            <span class="brand-name">HirePrep</span>
+            <span class="brand-tagline">Interview Preparation</span>
+        </a>
+    </div>
+</header>
 
-    <header class="navbar">
+<!-- =========================
+     MAIN
+========================= -->
+<main class="page-container">
 
-        <div class="nav-container">
+    <a href="index.html" class="top-back">
+        ← Back
+    </a>
 
-            <a href="index.html"
-                class="brand">
+    <div class="page-header">
+        <h1>Upload Documents</h1>
 
-                <div class="brand-logo">
-                    H
-                </div>
-
-                <div class="brand-info">
-
-                    <div class="brand-name">
-                        HirePrep
-                    </div>
-
-                    <div class="brand-subtitle">
-                        Interview Preparation
-                    </div>
-
-                </div>
-
-            </a>
-
-
-            <nav class="nav-links">
-
-                <a href="index.html">
-                    Home
-                </a>
-
-                <a href="index.html#features">
-                    Features
-                </a>
-
-                <a href="index.html#how-it-works">
-                    How It Works
-                </a>
-
-            </nav>
-
-
-            <a href="analyze.html"
-                class="nav-button">
-
-                Get Started
-
-            </a>
-
-        </div>
-
-    </header>
-
+        <p>
+            Upload your resume and job description to analyze
+            your profile and identify how well your skills
+            match the target role.
+        </p>
+    </div>
 
     <!-- =========================
-         ANALYSIS PAGE
-    ========================== -->
-
-    <main>
-
-        <section class="analyze-page">
-
-            <div class="container">
-
-
-                <!-- PAGE HEADER -->
-
-                <div class="analyze-heading">
-
-                    <div class="section-label">
-                        STEP 01 · DOCUMENTS
-                    </div>
-
-                    <h1>
-                        Upload your documents.
-                    </h1>
-
-                    <p>
-                        Upload your resume and the job
-                        description you want to prepare for.
-                        HirePrep will analyze both documents
-                        and generate personalized interview
-                        questions.
-                    </p>
-
-                </div>
-
-
-                <!-- =========================
-                     UPLOAD GRID
-                ========================== -->
-
-                <div class="upload-grid">
-
-
-                    <!-- RESUME -->
-
-                    <div class="upload-card">
-
-                        <div class="upload-card-header">
-
-                            <div>
-
-                                <div class="upload-number">
-                                    01
-                                </div>
-
-                                <h2>
-                                    Resume
-                                </h2>
-
-                                <p>
-                                    Upload your latest resume
-                                    in PDF format.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-
-                        <label
-                            for="resumeFile"
-                            class="upload-area">
-
-                            <div class="upload-icon">
-                                ↑
-                            </div>
-
-                            <strong>
-                                Choose Resume PDF
-                            </strong>
-
-                            <span>
-                                PDF files only
-                            </span>
-
-                        </label>
-
-
-                        <!-- REAL FILE INPUT -->
-
-                        <input
-                            type="file"
-                            id="resumeFile"
-                            name="resumeFile"
-                            accept=".pdf,application/pdf"
-                        >
-
-
-                        <div
-                            id="resumeFileName"
-                            class="selected-file">
-
-                            No file selected
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- JOB DESCRIPTION -->
-
-                    <div class="upload-card">
-
-                        <div class="upload-card-header">
-
-                            <div>
-
-                                <div class="upload-number">
-                                    02
-                                </div>
-
-                                <h2>
-                                    Job Description
-                                </h2>
-
-                                <p>
-                                    Upload the job description
-                                    for the role you are targeting.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-
-                        <label
-                            for="jdFile"
-                            class="upload-area">
-
-                            <div class="upload-icon">
-                                ↑
-                            </div>
-
-                            <strong>
-                                Choose Job Description PDF
-                            </strong>
-
-                            <span>
-                                PDF files only
-                            </span>
-
-                        </label>
-
-
-                        <!-- REAL FILE INPUT -->
-
-                        <input
-                            type="file"
-                            id="jdFile"
-                            name="jdFile"
-                            accept=".pdf,application/pdf"
-                        >
-
-
-                        <div
-                            id="jdFileName"
-                            class="selected-file">
-
-                            No file selected
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- =========================
-                     ANALYZE BUTTON
-                ========================== -->
-
-                <div class="analyze-action">
-
-                    <button
-                        type="button"
-                        id="analyzeBtn"
-                        class="primary-btn">
-
-                        Analyze Documents
-                        <span>→</span>
-
-                    </button>
-
-                </div>
-
-
-                <!-- =========================
-                     PROCESSING
-                ========================== -->
+         UPLOAD SECTION
+    ========================= -->
+    <section class="upload-grid">
+
+        <!-- RESUME -->
+        <div class="upload-card">
+
+            <h2>
+                Resume <span class="required">*</span>
+            </h2>
+
+            <p>
+                Upload your resume in PDF format.
+            </p>
+
+            <div class="upload-area">
+
+                <input
+                    type="file"
+                    id="resumeFile"
+                    accept=".pdf"
+                >
+
+                <br>
+
+                <button
+                    type="button"
+                    class="upload-button"
+                    onclick="document.getElementById('resumeFile').click()"
+                >
+                    Choose Resume
+                </button>
 
                 <div
-                    id="processing"
-                    class="processing"
-                    style="display: none;">
-
-                    <div class="processing-header">
-
-                        <div class="processing-spinner"></div>
-
-                        <div>
-
-                            <div class="section-label">
-                                PROCESSING
-                            </div>
-
-                            <h2>
-                                Analyzing your documents...
-                            </h2>
-
-                            <p id="processingStatus">
-                                Starting analysis...
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="processing-steps">
-
-                        <div class="processing-step">
-
-                            <span>
-                                01
-                            </span>
-
-                            <div>
-                                <strong>
-                                    Resume Analysis
-                                </strong>
-
-                                <p>
-                                    Extracting profile,
-                                    skills and experience.
-                                </p>
-                            </div>
-
-                        </div>
-
-
-                        <div class="processing-step">
-
-                            <span>
-                                02
-                            </span>
-
-                            <div>
-                                <strong>
-                                    Job Analysis
-                                </strong>
-
-                                <p>
-                                    Identifying role requirements
-                                    and technologies.
-                                </p>
-                            </div>
-
-                        </div>
-
-
-                        <div class="processing-step">
-
-                            <span>
-                                03
-                            </span>
-
-                            <div>
-                                <strong>
-                                    Question Generation
-                                </strong>
-
-                                <p>
-                                    Creating personalized
-                                    interview questions.
-                                </p>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
+                    id="resumeStatus"
+                    class="upload-status"
+                ></div>
 
             </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- =========================
-         FOOTER
-    ========================== -->
-
-    <footer class="footer">
-
-        <div class="container footer-content">
-
-            <div>
-
-                <strong>
-                    HirePrep
-                </strong>
-
-                <span>
-                    · Interview Preparation Platform
-                </span>
-
-            </div>
-
-            <span>
-                Prepare smarter. Practice with purpose.
-            </span>
-
         </div>
 
-    </footer>
+        <!-- JOB DESCRIPTION -->
+        <div class="upload-card">
+
+            <h2>
+                Job Description 
+            </h2>
+
+            <p>
+                Upload a job description or enter it manually.
+            </p>
+
+            <div class="upload-area">
+
+                <input
+                    type="file"
+                    id="jdFile"
+                    accept=".pdf,.docx,.txt"
+                >
+
+                <br>
+
+                <button
+                    type="button"
+                    class="upload-button"
+                    onclick="document.getElementById('jdFile').click()"
+                >
+                    Choose JD
+                </button>
+
+                <div
+                    id="jdStatus"
+                    class="upload-status"
+                ></div>
+
+            </div>
+        </div>
+
+    </section>
+
+    <!-- =========================
+         TEXT JD
+    ========================= -->
+    <section
+        class="upload-card"
+        style="margin-top: 25px;"
+    >
+
+        <h2>
+            Or Enter Job Description
+        </h2>
+
+        <p>
+            Paste the job description below if you don't have
+            a file.
+        </p>
+
+        <textarea
+            id="jdText"
+            class="text-input"
+            placeholder="Paste the job description here..."
+        ></textarea>
+
+        <div
+            id="jdTextStatus"
+            class="jd-text-status"
+        ></div>
+
+    </section>
+
+    <!-- =========================
+         ACTION
+    ========================= -->
+    <div class="action-section">
+
+        <button
+            type="button"
+            class="analyze-button"
+            onclick="startAnalysis()"
+        >
+            Analyze Documents
+        </button>
+
+    </div>
+
+</main>
 
 
-    <!-- SCRIPT -->
+<script>
 
-    <script src="script.js"></script>
+    /* =========================
+       RESUME FILE MESSAGE
+    ========================= */
+
+    document
+        .getElementById("resumeFile")
+        .addEventListener("change", function () {
+
+            const status =
+                document.getElementById("resumeStatus");
+
+            if (this.files.length > 0) {
+
+                status.textContent =
+                    "✓ Resume uploaded: " + this.files[0].name;
+
+                status.className =
+                    "upload-status success";
+
+            } else {
+
+                status.textContent = "";
+
+            }
+
+        });
+
+
+    /* =========================
+       JD FILE MESSAGE
+    ========================= */
+
+    document
+        .getElementById("jdFile")
+        .addEventListener("change", function () {
+
+            const status =
+                document.getElementById("jdStatus");
+
+            const text =
+                document.getElementById("jdText");
+
+            if (this.files.length > 0) {
+
+                status.textContent =
+                    "✓ Job description uploaded: " +
+                    this.files[0].name;
+
+                status.className =
+                    "upload-status success";
+
+                /*
+                   Clear manually entered JD because
+                   uploaded file is being used.
+                */
+                text.value = "";
+
+                document.getElementById("jdTextStatus").textContent = "";
+
+            } else {
+
+                status.textContent = "";
+
+            }
+
+        });
+
+
+    /* =========================
+       MANUAL JD MESSAGE
+    ========================= */
+
+    document
+        .getElementById("jdText")
+        .addEventListener("input", function () {
+
+            const status =
+                document.getElementById("jdTextStatus");
+
+            const jdFile =
+                document.getElementById("jdFile");
+
+            if (this.value.trim()) {
+
+                status.textContent =
+                    "✓ Job description entered manually.";
+
+                status.style.color = "#16803c";
+
+                /*
+                   Clear uploaded JD when user starts
+                   typing a manual JD.
+                */
+                jdFile.value = "";
+
+                document.getElementById("jdStatus").textContent = "";
+
+            } else {
+
+                status.textContent = "";
+
+            }
+
+        });
+
+
+    /* =========================
+       START ANALYSIS
+    ========================= */
+
+    async function startAnalysis() {
+
+        const resumeFile =
+            document.getElementById("resumeFile").files[0];
+
+        const jdFile =
+            document.getElementById("jdFile").files[0];
+
+        const jdText =
+            document.getElementById("jdText").value.trim();
+
+        const button =
+            document.querySelector(".analyze-button");
+
+
+        /* =========================
+           VALIDATION
+        ========================= */
+
+        if (!resumeFile) {
+
+            document.getElementById("resumeStatus").textContent =
+                "⚠ Please upload your resume.";
+
+            document.getElementById("resumeStatus").className =
+                "upload-status error";
+
+            alert("Please upload your resume.");
+
+            return;
+        }
+
+
+        if (!jdFile && !jdText) {
+
+            const jdStatus =
+                document.getElementById("jdStatus");
+
+            const jdTextStatus =
+                document.getElementById("jdTextStatus");
+
+            jdStatus.textContent =
+                "⚠ Please upload a job description or enter it manually.";
+
+            jdStatus.className =
+                "upload-status error";
+
+            jdTextStatus.textContent =
+                "⚠ Job description is required.";
+
+            jdTextStatus.style.color =
+                "#d60000";
+
+            alert(
+                "Please upload a job description or enter it manually."
+            );
+
+            return;
+        }
+
+
+        /* =========================
+           LOADING
+        ========================= */
+
+        button.disabled = true;
+        button.textContent = "Analyzing...";
+
+
+        try {
+
+            /* =========================
+               1. RESUME ANALYSIS
+            ========================= */
+
+            const resumeFormData =
+                new FormData();
+
+            resumeFormData.append(
+                "file",
+                resumeFile
+            );
+
+
+            const resumeResponse =
+                await fetch(
+                    "http://127.0.0.1:8000/analyze-resume",
+                    {
+                        method: "POST",
+                        body: resumeFormData
+                    }
+                );
+
+
+            const resumeAnalysis =
+                await resumeResponse.json();
+
+
+            if (
+                !resumeResponse.ok ||
+                resumeAnalysis.error
+            ) {
+
+                throw new Error(
+                    resumeAnalysis.error ||
+                    "Resume analysis failed."
+                );
+
+            }
+
+
+            /* =========================
+               2. JOB DESCRIPTION ANALYSIS
+            ========================= */
+
+            let jdAnalysis;
+
+
+            if (jdFile) {
+
+                const jdFormData =
+                    new FormData();
+
+                jdFormData.append(
+                    "file",
+                    jdFile
+                );
+
+
+                const jdResponse =
+                    await fetch(
+                        "http://127.0.0.1:8000/analyze-job-description-file",
+                        {
+                            method: "POST",
+                            body: jdFormData
+                        }
+                    );
+
+
+                jdAnalysis =
+                    await jdResponse.json();
+
+
+                if (
+                    !jdResponse.ok ||
+                    jdAnalysis.error
+                ) {
+
+                    throw new Error(
+                        jdAnalysis.error ||
+                        "Job description analysis failed."
+                    );
+
+                }
+
+            } else {
+
+                const jdResponse =
+                    await fetch(
+                        "http://127.0.0.1:8000/analyze-job-description",
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                job_description: jdText
+                            })
+                        }
+                    );
+
+
+                jdAnalysis =
+                    await jdResponse.json();
+
+
+                if (
+                    !jdResponse.ok ||
+                    jdAnalysis.error
+                ) {
+
+                    throw new Error(
+                        jdAnalysis.error ||
+                        "Job description analysis failed."
+                    );
+
+                }
+
+            }
+
+
+            /* =========================
+               SAVE RESULTS
+            ========================= */
+
+            sessionStorage.setItem(
+                "resumeAnalysis",
+                JSON.stringify(resumeAnalysis)
+            );
+
+
+            sessionStorage.setItem(
+                "jdAnalysis",
+                JSON.stringify(jdAnalysis)
+            );
+
+
+            sessionStorage.setItem(
+                "resumeFileName",
+                resumeFile.name
+            );
+
+
+            if (jdFile) {
+
+                sessionStorage.setItem(
+                    "jdFileName",
+                    jdFile.name
+                );
+
+                sessionStorage.removeItem(
+                    "jdText"
+                );
+
+            }
+
+
+            if (jdText) {
+
+                sessionStorage.setItem(
+                    "jdText",
+                    jdText
+                );
+
+                sessionStorage.removeItem(
+                    "jdFileName"
+                );
+
+            }
+
+
+            /* =========================
+               GO TO RESULTS
+            ========================= */
+
+            window.location.href =
+                "results.html";
+
+        }
+
+
+        catch (error) {
+
+            console.error(
+                "Analysis error:",
+                error
+            );
+
+
+            alert(
+                "Unable to analyze the documents.\n\n" +
+                error.message
+            );
+
+
+            button.disabled = false;
+
+            button.textContent =
+                "Analyze Documents";
+
+        }
+
+    }
+
+</script>
+
 
 </body>
-
 </html>

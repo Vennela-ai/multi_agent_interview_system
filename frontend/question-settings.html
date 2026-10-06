@@ -1,0 +1,603 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Select Job Role - Multi-Agent Interview System
+    </title>
+
+    <link rel="stylesheet" href="style.css">
+
+
+    <style>
+
+        /* =========================================
+           PAGE
+        ========================================= */
+
+        .settings-page {
+            min-height: calc(100vh - 80px);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 70px 20px 50px;
+
+            position: relative;
+        }
+
+
+        /* =========================================
+           TOP LEFT BACK BUTTON
+        ========================================= */
+
+        .top-back {
+            position: absolute;
+
+            top: 25px;
+            left: 30px;
+
+            display: inline-flex;
+            align-items: center;
+
+            gap: 6px;
+
+            padding: 10px 18px;
+
+            border: 1px solid #d0d0d0;
+            border-radius: 8px;
+
+            background: #ffffff;
+            color: #333333;
+
+            text-decoration: none;
+
+            font-size: 15px;
+            font-weight: 600;
+
+            box-sizing: border-box;
+
+            transition: 0.2s ease;
+        }
+
+
+        .top-back:hover {
+            background: #f5f5f5;
+        }
+
+
+        /* =========================================
+           SETTINGS CARD
+        ========================================= */
+
+        .settings-card {
+
+            width: 100%;
+            max-width: 700px;
+
+            padding: 45px;
+
+            border-radius: 16px;
+
+            background: #ffffff;
+
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.08);
+
+            box-sizing: border-box;
+        }
+
+
+        .settings-card h1 {
+
+            margin: 0 0 12px;
+
+            font-size: 32px;
+        }
+
+
+        .settings-description {
+
+            margin: 0 0 30px;
+
+            line-height: 1.6;
+
+            color: #666666;
+        }
+
+
+        /* =========================================
+           FORM
+        ========================================= */
+
+        .form-group {
+
+            margin-bottom: 25px;
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            margin-bottom: 10px;
+
+            font-weight: 600;
+        }
+
+
+        #roleSelect {
+
+            width: 100%;
+
+            box-sizing: border-box;
+
+            padding: 14px 16px;
+
+            border: 1px solid #d5d5d5;
+
+            border-radius: 8px;
+
+            background: #ffffff;
+
+            font-size: 16px;
+
+            outline: none;
+        }
+
+
+        #roleSelect:focus {
+
+            border-color: #555555;
+        }
+
+
+        /* =========================================
+           BUTTON AREA
+        ========================================= */
+
+        .settings-actions {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            align-items: center;
+
+            margin-top: 30px;
+        }
+
+
+        .primary-btn {
+
+            min-height: 48px;
+
+            padding: 12px 24px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            box-sizing: border-box;
+        }
+
+
+        .primary-btn:disabled {
+
+            opacity: 0.6;
+
+            cursor: not-allowed;
+        }
+
+
+        /* =========================================
+           STATUS
+        ========================================= */
+
+        #statusMessage {
+
+            margin-top: 18px;
+
+            min-height: 22px;
+
+            font-size: 14px;
+
+            color: #666666;
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 600px) {
+
+            .settings-page {
+
+                padding:
+                    80px
+                    15px
+                    30px;
+            }
+
+
+            .top-back {
+
+                top: 20px;
+
+                left: 15px;
+            }
+
+
+            .settings-card {
+
+                padding: 28px 22px;
+            }
+
+
+            .settings-card h1 {
+
+                font-size: 26px;
+            }
+
+
+            .settings-actions {
+
+                justify-content: stretch;
+            }
+
+
+            .primary-btn {
+
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         HEADER
+    ========================================= -->
+
+    <header class="navbar">
+        <div class="navbar-container">
+    
+            <a href="index.html" class="brand">
+                <span class="brand-logo">H</span>
+                <span class="brand-name">HirePrep</span>
+                <span class="brand-tagline">Interview Preparation</span>
+            </a>
+    
+        </div>
+    </header>
+
+
+
+    <!-- =========================================
+         MAIN
+    ========================================= -->
+
+    <main class="settings-page">
+
+
+        <!-- TOP LEFT BACK -->
+
+        <a
+            href="index.html"
+            class="top-back"
+        >
+            ← Back
+        </a>
+
+
+
+        <!-- SETTINGS CARD -->
+
+        <section class="settings-card">
+
+
+            <h1>
+                Select Job Role
+            </h1>
+
+
+            <p class="settings-description">
+
+                Select the job role for which you want to
+                practice verified interview questions.
+
+            </p>
+
+
+
+            <!-- ROLE -->
+
+            <div class="form-group">
+
+                <label for="roleSelect">
+
+                    Job Role
+
+                </label>
+
+
+                <select id="roleSelect">
+
+                    <option value="">
+
+                        Loading roles...
+
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- START BUTTON -->
+
+            <div class="settings-actions">
+
+                <button
+                    id="startButton"
+                    class="primary-btn"
+                    type="button"
+                >
+
+                    Start Interview Questions
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+            </div>
+
+
+
+            <!-- STATUS -->
+
+            <div id="statusMessage"></div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <script>
+
+
+        // =========================================
+        // API
+        // =========================================
+
+        const API_BASE_URL =
+            "http://127.0.0.1:8000";
+
+
+
+        // =========================================
+        // ELEMENTS
+        // =========================================
+
+        const roleSelect =
+            document.getElementById(
+                "roleSelect"
+            );
+
+
+        const startButton =
+            document.getElementById(
+                "startButton"
+            );
+
+
+        const statusMessage =
+            document.getElementById(
+                "statusMessage"
+            );
+
+
+
+        // =========================================
+        // LOAD ROLES
+        // =========================================
+
+        async function loadRoles() {
+
+            try {
+
+                statusMessage.textContent =
+                    "Loading job roles...";
+
+
+                const response =
+                    await fetch(
+                        `${API_BASE_URL}/roles`
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        `HTTP error: ${response.status}`
+                    );
+
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                if (
+                    !data.success ||
+                    !Array.isArray(data.roles)
+                ) {
+
+                    throw new Error(
+                        "Invalid role data received."
+                    );
+
+                }
+
+
+                roleSelect.innerHTML = "";
+
+
+                const defaultOption =
+                    document.createElement(
+                        "option"
+                    );
+
+
+                defaultOption.value = "";
+
+
+                defaultOption.textContent =
+                    "Select a job role";
+
+
+                roleSelect.appendChild(
+                    defaultOption
+                );
+
+
+
+                data.roles.forEach(
+                    function(role) {
+
+                        const option =
+                            document.createElement(
+                                "option"
+                            );
+
+
+                        option.value =
+                            role.name;
+
+
+                        option.textContent =
+                            role.name;
+
+
+                        roleSelect.appendChild(
+                            option
+                        );
+
+                    }
+                );
+
+
+                statusMessage.textContent =
+                    `${data.roles.length} job roles available.`;
+
+
+            }
+
+
+            catch (error) {
+
+                console.error(
+                    "Role loading error:",
+                    error
+                );
+
+
+                roleSelect.innerHTML =
+
+                    `
+                    <option value="">
+                        Unable to load roles
+                    </option>
+                    `;
+
+
+                statusMessage.textContent =
+                    "Unable to connect to the question database.";
+
+            }
+
+        }
+
+
+
+        // =========================================
+        // START QUESTIONS
+        // =========================================
+
+        startButton.addEventListener(
+            "click",
+            function() {
+
+                const selectedRole =
+                    roleSelect.value;
+
+
+                if (!selectedRole) {
+
+                    alert(
+                        "Please select a job role."
+                    );
+
+                    return;
+
+                }
+
+
+                window.location.href =
+                    `questions.html?role=${encodeURIComponent(selectedRole)}`;
+
+            }
+        );
+
+
+
+        // =========================================
+        // INITIALIZE
+        // =========================================
+
+        loadRoles();
+
+
+    </script>
+
+
+</body>
+
+</html>
+

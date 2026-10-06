@@ -5,49 +5,305 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>HirePrep | Analysis Results</title>
+    <title>HirePrep - Analysis Results</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            width: 100%;
+            background: #ffffff;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .navbar-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 18px 30px;
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .brand-logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #111111;
+        }
+
+        .brand-name {
+            font-size: 21px;
+            font-weight: 700;
+            color: #111111;
+        }
+
+        .brand-tagline {
+            font-size: 14px;
+            color: #777777;
+        }
+
+
+        /* =========================
+           PAGE
+        ========================= */
+
+        .results-container {
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 60px 30px 80px;
+        }
+
+        .top-back {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: #333333;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .top-back:hover {
+            color: #000000;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .results-header {
+            margin-bottom: 40px;
+        }
+
+        .step-label {
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #777777;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .results-header h1 {
+            margin: 0 0 15px;
+            font-size: 42px;
+            color: #111111;
+        }
+
+        .results-header p {
+            margin: 0;
+            max-width: 750px;
+            font-size: 17px;
+            line-height: 1.6;
+            color: #666666;
+        }
+
+
+        /* =========================
+           RESULT CARDS
+        ========================= */
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .result-card {
+            padding: 30px;
+            background: #ffffff;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            box-sizing: border-box;
+        }
+
+        .result-card h2 {
+            margin: 0 0 20px;
+            font-size: 21px;
+            color: #111111;
+        }
+
+        .result-card h3 {
+            margin: 22px 0 10px;
+            font-size: 15px;
+            color: #333333;
+        }
+
+        .result-card p {
+            margin: 0 0 8px;
+            font-size: 15px;
+            line-height: 1.7;
+            color: #666666;
+        }
+
+        .result-card ul {
+            margin: 8px 0 0;
+            padding-left: 20px;
+        }
+
+        .result-card li {
+            margin-bottom: 7px;
+            color: #555555;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            padding: 6px 11px;
+            background: #f3f3f3;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #333333;
+        }
+
+
+        /* =========================
+           ACTIONS
+        ========================= */
+
+        .results-actions {
+            margin-top: 35px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .primary-button,
+        .secondary-button {
+            display: inline-block;
+            padding: 13px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+        }
+
+        .primary-button {
+            background: #111111;
+            color: #ffffff;
+        }
+
+        .primary-button:hover {
+            background: #333333;
+        }
+
+        .secondary-button {
+            background: #ffffff;
+            color: #111111;
+            border: 1px solid #d5d5d5;
+        }
+
+        .secondary-button:hover {
+            background: #f5f5f5;
+        }
+
+        .primary-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status-message {
+            margin-top: 20px;
+            padding: 14px 18px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #555555;
+            display: none;
+        }
+
+
+        /* =========================
+           EMPTY STATE
+        ========================= */
+
+        .empty-message {
+            padding: 25px;
+            background: #f8f8f8;
+            border-radius: 8px;
+            color: #666666;
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .results-header h1 {
+                font-size: 34px;
+            }
+
+            .brand-tagline {
+                display: none;
+            }
+
+            .results-container {
+                padding: 40px 20px 60px;
+            }
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
+
     <!-- =========================
-         NAVIGATION
-    ========================== -->
+         NAVBAR
+    ========================= -->
 
     <header class="navbar">
 
-        <div class="nav-container">
+        <div class="navbar-container">
 
             <a href="index.html" class="brand">
 
-                <div class="brand-logo">
-                    H
-                </div>
+                <span class="brand-logo">H</span>
 
-                <div class="brand-info">
+                <span class="brand-name">
+                    HirePrep
+                </span>
 
-                    <div class="brand-name">
-                        HirePrep
-                    </div>
+                <span class="brand-tagline">
+                    Interview Preparation
+                </span>
 
-                    <div class="brand-subtitle">
-                        Interview Preparation
-                    </div>
-
-                </div>
-
-            </a>
-
-
-            <div class="page-indicator">
-                Step 02 · Analysis Results
-            </div>
-
-
-            <a href="analyze.html" class="back-link">
-                ← Analyze Again
             </a>
 
         </div>
@@ -55,438 +311,755 @@
     </header>
 
 
+
     <!-- =========================
-         MAIN
-    ========================== -->
+         RESULTS
+    ========================= -->
 
-    <main class="results-page">
-
-        <div class="container">
+    <main class="results-container">
 
 
-            <!-- =========================
-                 PAGE HEADING
-            ========================== -->
-
-            <section class="results-heading">
-
-                <div class="section-label">
-                    STEP 02 · ANALYSIS RESULTS
-                </div>
-
-                <h1>
-                    Your profile has been analyzed.
-                </h1>
-
-                <p>
-                    Review the information extracted from your resume
-                    and the requirements identified from the job description.
-                </p>
-
-            </section>
+        <a href="analyze.html" class="top-back">
+            ← Analyze Again
+        </a>
 
 
-            <!-- =========================
-                 RESUME ANALYSIS
-            ========================== -->
+        <section class="results-header">
 
-            <section class="result-section">
+            <div class="step-label">
+                Step 02 · Analysis Results
+            </div>
 
-                <div class="result-section-header">
+            <h1>
+                Analysis Results
+            </h1>
 
-                    <div>
+            <p>
+                Your resume and job description have been analyzed.
+                Review the insights below before generating your
+                job-specific tailored resume.
+            </p>
 
-                        <div class="section-label">
-                            01 · RESUME
-                        </div>
+        </section>
 
-                        <h2>
-                            Candidate Profile
-                        </h2>
 
+
+        <!-- =========================
+             RESULT CARDS
+        ========================= -->
+
+        <section class="results-grid">
+
+
+            <!-- RESUME ANALYSIS -->
+
+            <div class="result-card">
+
+                <h2>
+                    Resume Analysis
+                </h2>
+
+                <div id="resumeResults">
+
+                    <div class="empty-message">
+                        Loading resume analysis...
                     </div>
 
-                    <span class="result-badge">
-                        Resume Analysis
-                    </span>
-
                 </div>
 
-
-                <div class="result-grid">
-
-
-                    <!-- CANDIDATE -->
-
-                    <article class="result-card">
-
-                        <span class="result-card-label">
-                            CANDIDATE
-                        </span>
-
-                        <div id="candidate" class="result-value">
-                            —
-                        </div>
-
-                    </article>
-
-
-                    <!-- SKILLS -->
-
-                    <article class="result-card">
-
-                        <span class="result-card-label">
-                            SKILLS
-                        </span>
-
-                        <div id="skills" class="result-text">
-                            —
-                        </div>
-
-                    </article>
-
-
-                    <!-- PROJECTS -->
-
-                    <article class="result-card">
-
-                        <span class="result-card-label">
-                            PROJECTS
-                        </span>
-
-                        <div id="projects" class="result-text">
-                            —
-                        </div>
-
-                    </article>
-
-
-                    <!-- EXPERIENCE -->
-
-                    <article class="result-card">
-
-                        <span class="result-card-label">
-                            EXPERIENCE
-                        </span>
-
-                        <div id="experience" class="result-text">
-                            —
-                        </div>
-
-                    </article>
-
-
-                    <!-- CERTIFICATIONS -->
-
-                    <article class="result-card">
-
-                        <span class="result-card-label">
-                            CERTIFICATIONS
-                        </span>
-
-                        <div id="certifications" class="result-text">
-                            —
-                        </div>
-
-                    </article>
-
-
-                    <!-- STRENGTHS -->
-
-                    <article class="result-card">
-
-                        <span class="result-card-label">
-                            STRENGTHS
-                        </span>
-
-                        <div id="strengths" class="result-text">
-                            —
-                        </div>
-
-                    </article>
-
-
-                    <!-- ACHIEVEMENTS -->
-
-                    <article class="result-card result-card-wide">
-
-                        <span class="result-card-label">
-                            ACHIEVEMENTS
-                        </span>
-
-                        <div id="achievements" class="result-text">
-                            —
-                        </div>
-
-                    </article>
-
-                </div>
-
-            </section>
+            </div>
 
 
 
-            <!-- =========================
-                 JOB DESCRIPTION
-            ========================== -->
+            <!-- JD ANALYSIS -->
 
-            <section class="result-section">
+            <div class="result-card">
 
-                <div class="result-section-header">
+                <h2>
+                    Job Description Analysis
+                </h2>
 
-                    <div>
+                <div id="jdResults">
 
-                        <div class="section-label">
-                            02 · JOB DESCRIPTION
-                        </div>
-
-                        <h2>
-                            Role Requirements
-                        </h2>
-
+                    <div class="empty-message">
+                        Loading job description analysis...
                     </div>
 
-                    <span class="result-badge">
-                        JD Analysis
-                    </span>
-
                 </div>
 
+            </div>
 
-                <div class="result-grid">
 
+        </section>
 
-                    <!-- JOB DETAILS -->
 
-                    <article class="result-card">
 
-                        <span class="result-card-label">
-                            JOB DETAILS
-                        </span>
+        <!-- =========================
+             ACTIONS
+        ========================= -->
 
-                        <div id="jdJobDetails" class="result-text">
-                            —
-                        </div>
+        <div class="results-actions">
 
-                    </article>
 
+            <button
+                id="generateResumeButton"
+                class="primary-button"
+                onclick="generateTailoredResume()"
+            >
+                Generate Tailored Resume
+            </button>
 
-                    <!-- REQUIRED SKILLS -->
 
-                    <article class="result-card">
-
-                        <span class="result-card-label">
-                            REQUIRED SKILLS
-                        </span>
-
-                        <div id="jdRequiredSkills" class="result-text">
-                            —
-                        </div>
-
-                    </article>
-
-
-                    <!-- PREFERRED SKILLS -->
-
-                    <article class="result-card">
-
-                        <span class="result-card-label">
-                            PREFERRED SKILLS
-                        </span>
-
-                        <div id="jdPreferredSkills" class="result-text">
-                            —
-                        </div>
-
-                    </article>
-
-
-                    <!-- LANGUAGES -->
-
-                    <article class="result-card">
-
-                        <span class="result-card-label">
-                            PROGRAMMING LANGUAGES
-                        </span>
-
-                        <div id="jdLanguages" class="result-text">
-                            —
-                        </div>
-
-                    </article>
-
-
-                    <!-- TOOLS -->
-
-                    <article class="result-card">
-
-                        <span class="result-card-label">
-                            TOOLS & TECHNOLOGIES
-                        </span>
-
-                        <div id="jdTools" class="result-text">
-                            —
-                        </div>
-
-                    </article>
-
-
-                    <!-- EDUCATION -->
-
-                    <article class="result-card">
-
-                        <span class="result-card-label">
-                            EDUCATION
-                        </span>
-
-                        <div id="jdEducation" class="result-text">
-                            —
-                        </div>
-
-                    </article>
-
-
-                    <!-- RESPONSIBILITIES -->
-
-                    <article class="result-card result-card-wide">
-
-                        <span class="result-card-label">
-                            RESPONSIBILITIES
-                        </span>
-
-                        <div id="jdResponsibilities" class="result-text">
-                            —
-                        </div>
-
-                    </article>
-
-
-                    <!-- QUALIFICATIONS -->
-
-                    <article class="result-card result-card-wide">
-
-                        <span class="result-card-label">
-                            QUALIFICATIONS
-                        </span>
-
-                        <div id="jdQualifications" class="result-text">
-                            —
-                        </div>
-
-                    </article>
-
-
-                    <!-- DOMAIN -->
-
-                    <article class="result-card">
-
-                        <span class="result-card-label">
-                            DOMAIN
-                        </span>
-
-                        <div id="jdDomain" class="result-value">
-                            —
-                        </div>
-
-                    </article>
-
-
-                    <!-- KEYWORDS -->
-
-                    <article class="result-card">
-
-                        <span class="result-card-label">
-                            KEYWORDS
-                        </span>
-
-                        <div id="jdKeywords" class="result-text">
-                            —
-                        </div>
-
-                    </article>
-
-                </div>
-
-            </section>
-
-
-
-            <!-- =========================
-                 NEXT STEP
-            ========================== -->
-
-            <section class="results-next">
-
-                <div>
-
-                    <div class="section-label">
-                        NEXT STEP
-                    </div>
-
-                    <h2>
-                        Ready for personalized questions?
-                    </h2>
-
-                    <p>
-                        Generate interview questions based on your resume
-                        and the requirements of this role.
-                    </p>
-
-                </div>
-
-
-                <button
-                    id="generateQuestionsBtn"
-                    class="analyze-btn"
-                    type="button">
-
-                    Generate Questions
-
-                    <span>
-                        →
-                    </span>
-
-                </button>
-
-            </section>
+            <a
+                href="question-settings.html"
+                class="secondary-button"
+            >
+                Practice Interview Questions
+            </a>
 
 
         </div>
+
+
+        <div
+            id="statusMessage"
+            class="status-message"
+        >
+        </div>
+
 
     </main>
 
 
 
     <!-- =========================
-         FOOTER
-    ========================== -->
+         JAVASCRIPT
+    ========================= -->
 
-    <footer class="footer">
-
-        <div class="container footer-content">
-
-            <div>
-
-                <strong>
-                    HirePrep
-                </strong>
-
-                <span>
-                    · Interview Preparation Platform
-                </span>
-
-            </div>
-
-            <span>
-                Prepare smarter. Practice with purpose.
-            </span>
-
-        </div>
-
-    </footer>
+    <script>
 
 
-    <script src="script.js"></script>
+        /* =========================
+           HELPER FUNCTIONS
+        ========================= */
+
+        function escapeHtml(value) {
+
+            if (value === null || value === undefined) {
+                return "";
+            }
+
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+        function renderList(items) {
+
+            if (!Array.isArray(items) || items.length === 0) {
+                return "";
+            }
+
+            return `
+                <ul>
+                    ${items.map(item => `
+                        <li>${escapeHtml(item)}</li>
+                    `).join("")}
+                </ul>
+            `;
+
+        }
+
+
+        function renderTags(items) {
+
+            if (!Array.isArray(items) || items.length === 0) {
+                return "";
+            }
+
+            return `
+                <div class="tag-container">
+                    ${items.map(item => `
+                        <span class="tag">
+                            ${escapeHtml(item)}
+                        </span>
+                    `).join("")}
+                </div>
+            `;
+
+        }
+
+
+        /* =========================
+           RESUME DISPLAY
+        ========================= */
+
+        function displayResumeAnalysis(data) {
+
+            const container =
+                document.getElementById("resumeResults");
+
+
+            if (!data) {
+
+                container.innerHTML = `
+                    <div class="empty-message">
+                        Resume analysis data is not available.
+                        Please analyze your resume again.
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            const candidate =
+                data.candidate || {};
+
+            const skills =
+                data.skills || {};
+
+            const education =
+                data.education || [];
+
+            const experience =
+                data.experience || [];
+
+            const projects =
+                data.projects || [];
+
+
+            let html = "";
+
+
+            if (candidate.name) {
+
+                html += `
+                    <h3>Candidate</h3>
+                    <p>
+                        <strong>
+                            ${escapeHtml(candidate.name)}
+                        </strong>
+                    </p>
+                `;
+
+            }
+
+
+            if (candidate.email) {
+
+                html += `
+                    <p>
+                        Email:
+                        ${escapeHtml(candidate.email)}
+                    </p>
+                `;
+
+            }
+
+
+            if (candidate.phone) {
+
+                html += `
+                    <p>
+                        Phone:
+                        ${escapeHtml(candidate.phone)}
+                    </p>
+                `;
+
+            }
+
+
+            if (candidate.location) {
+
+                html += `
+                    <p>
+                        Location:
+                        ${escapeHtml(candidate.location)}
+                    </p>
+                `;
+
+            }
+
+
+            if (data.summary) {
+
+                html += `
+                    <h3>Professional Summary</h3>
+
+                    <p>
+                        ${escapeHtml(data.summary)}
+                    </p>
+                `;
+
+            }
+
+
+            if (skills.technical) {
+
+                html += `
+                    <h3>Technical Skills</h3>
+
+                    ${renderTags(skills.technical)}
+                `;
+
+            }
+
+
+            if (skills.programming_languages) {
+
+                html += `
+                    <h3>Programming Languages</h3>
+
+                    ${renderTags(
+                        skills.programming_languages
+                    )}
+                `;
+
+            }
+
+
+            if (skills.tools_and_technologies) {
+
+                html += `
+                    <h3>Tools & Technologies</h3>
+
+                    ${renderTags(
+                        skills.tools_and_technologies
+                    )}
+                `;
+
+            }
+
+
+            if (education.length) {
+
+                html += `
+                    <h3>Education</h3>
+
+                    ${renderList(education)}
+                `;
+
+            }
+
+
+            if (projects.length) {
+
+                html += `
+                    <h3>Projects</h3>
+
+                    ${renderList(
+                        projects.map(project => {
+
+                            if (typeof project === "string") {
+                                return project;
+                            }
+
+                            return project.name ||
+                                   project.description ||
+                                   JSON.stringify(project);
+
+                        })
+                    )}
+                `;
+
+            }
+
+
+            if (experience.length) {
+
+                html += `
+                    <h3>Experience</h3>
+
+                    ${renderList(
+                        experience.map(item => {
+
+                            if (typeof item === "string") {
+                                return item;
+                            }
+
+                            return item.title ||
+                                   item.company ||
+                                   item.description ||
+                                   JSON.stringify(item);
+
+                        })
+                    )}
+                `;
+
+            }
+
+
+            if (!html) {
+
+                html = `
+                    <div class="empty-message">
+                        Analysis completed, but no structured
+                        information was returned.
+                    </div>
+                `;
+
+            }
+
+
+            container.innerHTML = html;
+
+        }
+
+
+
+        /* =========================
+           JD DISPLAY
+        ========================= */
+
+        function displayJDAnalysis(data) {
+
+            const container =
+                document.getElementById("jdResults");
+
+
+            if (!data) {
+
+                container.innerHTML = `
+                    <div class="empty-message">
+                        Job description analysis data is not available.
+                        Please analyze the job description again.
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            let html = "";
+
+
+            if (data.role) {
+
+                html += `
+                    <h3>Target Role</h3>
+
+                    <p>
+                        <strong>
+                            ${escapeHtml(data.role)}
+                        </strong>
+                    </p>
+                `;
+
+            }
+
+
+            if (data.job_title) {
+
+                html += `
+                    <h3>Job Title</h3>
+
+                    <p>
+                        ${escapeHtml(data.job_title)}
+                    </p>
+                `;
+
+            }
+
+
+            if (data.summary) {
+
+                html += `
+                    <h3>Job Summary</h3>
+
+                    <p>
+                        ${escapeHtml(data.summary)}
+                    </p>
+                `;
+
+            }
+
+
+            if (data.required_skills) {
+
+                html += `
+                    <h3>Required Skills</h3>
+
+                    ${renderTags(data.required_skills)}
+                `;
+
+            }
+
+
+            if (data.skills) {
+
+                html += `
+                    <h3>Skills</h3>
+
+                    ${renderTags(data.skills)}
+                `;
+
+            }
+
+
+            if (data.technologies) {
+
+                html += `
+                    <h3>Technologies</h3>
+
+                    ${renderTags(data.technologies)}
+                `;
+
+            }
+
+
+            if (data.qualifications) {
+
+                html += `
+                    <h3>Qualifications</h3>
+
+                    ${renderList(data.qualifications)}
+                `;
+
+            }
+
+
+            if (data.responsibilities) {
+
+                html += `
+                    <h3>Responsibilities</h3>
+
+                    ${renderList(data.responsibilities)}
+                `;
+
+            }
+
+
+            if (data.experience) {
+
+                html += `
+                    <h3>Experience</h3>
+
+                    ${renderList(data.experience)}
+                `;
+
+            }
+
+
+            if (!html) {
+
+                html = `
+                    <div class="empty-message">
+                        Job description analysis completed.
+                        The returned analysis will be used for
+                        tailored resume generation.
+                    </div>
+                `;
+
+            }
+
+
+            container.innerHTML = html;
+
+        }
+
+
+
+        /* =========================
+           GENERATE TAILORED RESUME
+        ========================= */
+
+        async function generateTailoredResume() {
+
+            const resumeData =
+                sessionStorage.getItem("resumeAnalysis");
+
+            const jdData =
+                sessionStorage.getItem("jdAnalysis");
+
+
+            if (!resumeData || !jdData) {
+
+                alert(
+                    "Resume or job description analysis is missing. " +
+                    "Please analyze the documents again."
+                );
+
+                return;
+            }
+
+
+            const button =
+                document.getElementById(
+                    "generateResumeButton"
+                );
+
+            const status =
+                document.getElementById(
+                    "statusMessage"
+                );
+
+
+            button.disabled = true;
+
+            button.textContent =
+                "Generating Tailored Resume...";
+
+
+            status.style.display = "block";
+
+            status.textContent =
+                "Creating a resume tailored to the job description...";
+
+
+            try {
+
+                const resumeAnalysis =
+                    JSON.parse(resumeData);
+
+                const jdAnalysis =
+                    JSON.parse(jdData);
+
+
+                const response = await fetch(
+                    "http://127.0.0.1:8000/generate-tailored-resume",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            resume_analysis:
+                                resumeAnalysis,
+
+                            jd_analysis:
+                                jdAnalysis
+
+                        })
+                    }
+                );
+
+
+                const result =
+                    await response.json();
+
+
+                if (!response.ok || result.error) {
+
+                    throw new Error(
+                        result.error ||
+                        "Tailored resume generation failed."
+                    );
+
+                }
+
+
+                /* =========================
+                   SAVE TAILORED RESUME
+                ========================= */
+
+                sessionStorage.setItem(
+                    "tailoredResume",
+                    JSON.stringify(result)
+                );
+
+
+                /* =========================
+                   REDIRECT
+                ========================= */
+
+                window.location.href =
+                    "tailored-resume.html";
+
+
+            } catch (error) {
+
+                console.error(
+                    "Tailored resume error:",
+                    error
+                );
+
+
+                alert(
+                    "Unable to generate the tailored resume.\n\n" +
+                    error.message
+                );
+
+
+                button.disabled = false;
+
+                button.textContent =
+                    "Generate Tailored Resume";
+
+                status.style.display = "none";
+
+            }
+
+        }
+
+
+
+        /* =========================
+           PAGE LOAD
+        ========================= */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const resumeData =
+                    sessionStorage.getItem(
+                        "resumeAnalysis"
+                    );
+
+                const jdData =
+                    sessionStorage.getItem(
+                        "jdAnalysis"
+                    );
+
+
+                let resumeAnalysis = null;
+                let jdAnalysis = null;
+
+
+                try {
+
+                    if (resumeData) {
+                        resumeAnalysis =
+                            JSON.parse(resumeData);
+                    }
+
+                    if (jdData) {
+                        jdAnalysis =
+                            JSON.parse(jdData);
+                    }
+
+                } catch (error) {
+
+                    console.error(
+                        "Unable to read stored analysis:",
+                        error
+                    );
+
+                }
+
+
+                displayResumeAnalysis(
+                    resumeAnalysis
+                );
+
+                displayJDAnalysis(
+                    jdAnalysis
+                );
+
+            }
+        );
+
+    </script>
+
 
 </body>
 

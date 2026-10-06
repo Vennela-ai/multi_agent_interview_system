@@ -2,22 +2,564 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>HirePrep | Interview Preparation</title>
+    <title>HirePrep | Smart Interview Preparation</title>
 
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f6f7f9;
+            color: #111111;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            width: 100%;
+            padding: 18px 5%;
+            background: #ffffff;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .navbar-inner {
+            max-width: 1250px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: #111111;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 19px;
+        }
+
+        .brand-name {
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            color: #555555;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #111111;
+        }
+
+        .nav-button {
+            background: #111111;
+            color: white !important;
+            padding: 11px 20px;
+            border-radius: 8px;
+        }
+
+        /* ================= MAIN ================= */
+
+        .main {
+            max-width: 1250px;
+            margin: auto;
+            padding: 35px 25px 50px;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            background: #111111;
+            color: white;
+            border-radius: 24px;
+            min-height: 410px;
+            padding: 55px 60px;
+            display: grid;
+            grid-template-columns: 1.25fr 0.75fr;
+            align-items: center;
+            gap: 40px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 50%;
+            right: -120px;
+            top: -130px;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 50%;
+            right: 30px;
+            bottom: -150px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #242424;
+            border: 1px solid #333333;
+            padding: 8px 13px;
+            border-radius: 30px;
+            font-size: 12px;
+            color: #dddddd;
+            margin-bottom: 22px;
+        }
+
+        .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #ffffff;
+        }
+
+        .hero h1 {
+            font-size: 54px;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #a8a8a8;
+        }
+
+        .hero-description {
+            max-width: 600px;
+            font-size: 16px;
+            line-height: 1.7;
+            color: #bdbdbd;
+            margin-bottom: 28px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .primary-btn {
+            background: white;
+            color: #111111;
+            padding: 13px 22px;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .secondary-btn {
+            border: 1px solid #444444;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 9px;
+            font-size: 14px;
+        }
+
+        /* ================= HERO VISUAL ================= */
+
+        .hero-visual {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+        }
+
+        .dashboard-card {
+            width: 330px;
+            background: #1d1d1d;
+            border: 1px solid #353535;
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+        }
+
+        .dashboard-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .dashboard-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .dashboard-status {
+            font-size: 10px;
+            padding: 5px 8px;
+            border-radius: 20px;
+            background: #303030;
+            color: #cccccc;
+        }
+
+        .score-box {
+            background: #282828;
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .score {
+            font-size: 42px;
+            font-weight: 700;
+        }
+
+        .score-label {
+            font-size: 11px;
+            color: #999999;
+            margin-top: 5px;
+        }
+
+        .progress {
+            height: 7px;
+            background: #363636;
+            border-radius: 10px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 82%;
+            height: 100%;
+            background: #ffffff;
+            border-radius: 10px;
+        }
+
+        .dashboard-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .mini-card {
+            background: #282828;
+            border-radius: 10px;
+            padding: 12px 8px;
+            text-align: center;
+        }
+
+        .mini-number {
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .mini-text {
+            font-size: 9px;
+            color: #999999;
+            margin-top: 4px;
+        }
+
+        /* ================= STATS ================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 18px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #e6e6e6;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .stat-text {
+            font-size: 12px;
+            color: #777777;
+        }
+
+        /* ================= SECTION TITLE ================= */
+
+        .section-heading {
+            text-align: center;
+            margin: 55px 0 25px;
+        }
+
+        .section-heading h2 {
+            font-size: 30px;
+            margin-bottom: 9px;
+        }
+
+        .section-heading p {
+            color: #777777;
+            font-size: 14px;
+        }
+
+        /* ================= FEATURES ================= */
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .feature-card {
+            background: white;
+            border: 1px solid #e5e5e5;
+            border-radius: 17px;
+            padding: 27px;
+            transition: 0.25s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.07);
+        }
+
+        .feature-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: #111111;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #777777;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        /* ================= HOW IT WORKS ================= */
+
+        .workflow {
+            background: white;
+            border: 1px solid #e5e5e5;
+            border-radius: 20px;
+            padding: 35px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .step {
+            position: relative;
+            padding: 10px;
+        }
+
+        .step-number {
+            font-size: 12px;
+            color: #888888;
+            margin-bottom: 14px;
+        }
+
+        .step h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .step p {
+            color: #777777;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        /* ================= CTA ================= */
+
+        .cta {
+            margin-top: 55px;
+            background: #111111;
+            color: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .cta p {
+            color: #aaaaaa;
+            font-size: 14px;
+            margin-bottom: 22px;
+        }
+
+        .cta a {
+            display: inline-block;
+            background: white;
+            color: #111111;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+            text-align: center;
+            padding: 28px 0 5px;
+            color: #888888;
+            font-size: 12px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 40px;
+            }
+
+            .hero-visual {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 44px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .workflow {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a:not(.nav-button) {
+                display: none;
+            }
+
+            .main {
+                padding: 20px 15px;
+            }
+
+            .hero {
+                padding: 32px 25px;
+                min-height: 430px;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .hero-description {
+                font-size: 14px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .hero-buttons a {
+                text-align: center;
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .workflow {
+                grid-template-columns: 1fr;
+                padding: 25px;
+            }
+
+            .section-heading h2 {
+                font-size: 25px;
+            }
+
+            .cta {
+                padding: 30px 20px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- Navigation -->
+    <!-- ================= NAVBAR ================= -->
+
     <header class="navbar">
 
-        <div class="nav-container">
+        <div class="navbar-inner">
 
             <a href="index.html" class="brand">
 
@@ -25,20 +567,11 @@
                     H
                 </div>
 
-                <div class="brand-info">
-
-                    <div class="brand-name">
-                        HirePrep
-                    </div>
-
-                    <div class="brand-subtitle">
-                        Interview Preparation
-                    </div>
-
+                <div class="brand-name">
+                    HirePrep
                 </div>
 
             </a>
-
 
             <nav class="nav-links">
 
@@ -46,265 +579,61 @@
                     Home
                 </a>
 
-                <a href="features.html">
-                    Features
-                </a>
-
                 <a href="how-it-works.html">
                     How It Works
                 </a>
 
+                <a href="analyze.html" class="nav-button">
+                    Get Started
+                </a>
+
             </nav>
-
-
-            <a href="analyze.html" class="nav-button">
-                Get Started
-            </a>
 
         </div>
 
     </header>
 
 
-    <main>
+    <main class="main">
 
-        <!-- Hero -->
+        <!-- ================= HERO ================= -->
+
         <section class="hero">
 
-            <div class="hero-container">
+            <div class="hero-content">
 
-                <div class="hero-content">
+                <div class="hero-label">
+                    <span class="dot"></span>
+                    Smart Interview Preparation Platform
+                </div>
 
-                    <div class="eyebrow">
-                        INTERVIEW PREPARATION PLATFORM
-                    </div>
+                <h1>
+                    Prepare Smarter.<br>
+                    <span>Get Hired Faster.</span>
+                </h1>
 
-                    <h1>
+                <p class="hero-description">
+                    HirePrep helps you understand your resume, analyze
+                    job requirements, and practice verified interview
+                    questions based on your target role.
+                </p>
 
-                        Prepare for your
+                <div class="hero-buttons">
 
-                        <span>
-                            next interview.
-                        </span>
+                    <a href="analyze.html" class="primary-btn">
+                        Start Preparing →
+                    </a>
 
-                    </h1>
-
-                    <p class="hero-description">
-
-                        Upload your resume and the job description to
-                        understand the role and practice with interview
-                        questions tailored to your profile.
-
-                    </p>
-
-
-                    <div class="hero-actions">
-
-                        <a href="analyze.html" class="primary-btn">
-
-                            Start Preparing
-
-                            <span>
-                                →
-                            </span>
-
-                        </a>
-
-
-                        <a href="how-it-works.html" class="secondary-btn">
-
-                            See how it works
-
-                        </a>
-
-                    </div>
-
-
-                    <div class="hero-note">
-
-                        <span class="status-dot"></span>
-
-                        Resume + Job Description
-                        →
-                        Personalized Questions
-
-                    </div>
+                    <a href="question-settings.html" class="secondary-btn">
+                        Practice Questions
+                    </a>
 
                 </div>
 
+            </div>
 
-                <!-- Product Preview -->
-                <div class="hero-preview">
 
-                    <div class="preview-window">
-
-                        <div class="preview-topbar">
-
-                            <div class="window-controls">
-
-                                <span></span>
-                                <span></span>
-                                <span></span>
-
-                            </div>
-
-
-                            <div class="preview-url">
-                                hireprep
-                            </div>
-
-                        </div>
-
-
-                        <div class="preview-content">
-
-                            <div class="preview-heading">
-
-                                <div>
-
-                                    <small>
-                                        INTERVIEW PREPARATION
-                                    </small>
-
-                                    <h3>
-                                        Ready to practice
-                                    </h3>
-
-                                </div>
-
-
-                                <div class="preview-check">
-                                    ✓
-                                </div>
-
-                            </div>
-
-
-                            <div class="preview-files">
-
-                                <div class="preview-file">
-
-                                    <div class="file-type">
-                                        PDF
-                                    </div>
-
-                                    <div class="file-details">
-
-                                        <strong>
-                                            Resume.pdf
-                                        </strong>
-
-                                        <span>
-                                            Resume analyzed
-                                        </span>
-
-                                    </div>
-
-                                    <div class="file-status">
-                                        ✓
-                                    </div>
-
-                                </div>
-
-
-                                <div class="preview-file">
-
-                                    <div class="file-type job-file">
-                                        JD
-                                    </div>
-
-                                    <div class="file-details">
-
-                                        <strong>
-                                            Job Description.pdf
-                                        </strong>
-
-                                        <span>
-                                            Role analyzed
-                                        </span>
-
-                                    </div>
-
-                                    <div class="file-status">
-                                        ✓
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="preview-divider"></div>
-
-
-                            <div class="question-preview-header">
-
-                                <div>
-
-                                    <small>
-                                        GENERATED FOR YOU
-                                    </small>
-
-                                    <strong>
-                                        Interview Questions
-                                    </strong>
-
-                                </div>
-
-                                <span>
-                                    10
-                                </span>
-
-                            </div>
-
-
-                            <div class="question-item">
-
-                                <div class="question-number">
-                                    01
-                                </div>
-
-                                <p>
-
-                                    Tell me about one of your projects
-                                    and your contribution to it.
-
-                                </p>
-
-                            </div>
-
-
-                            <div class="question-item">
-
-                                <div class="question-number">
-                                    02
-                                </div>
-
-                                <p>
-
-                                    How have you used Python in your
-                                    academic or personal projects?
-
-                                </p>
-
-                            </div>
-
-
-                            <div class="question-item">
-
-                                <div class="question-number">
-                                    03
-                                </div>
-
-                                <p>
-
-                                    Why are you interested in this role?
-
-                                </p>
-
-                            </div>
-
-                        </div>
+           
 
                     </div>
 
@@ -314,36 +643,69 @@
 
         </section>
 
-    </main>
 
+        <!-- ================= STATS ================= -->
 
-    <!-- Footer -->
-    <footer class="footer">
+        <section class="stats">
 
-        <div class="container footer-content">
+            <div class="stat-card">
 
-            <div>
+                <div class="stat-number">
+                    66+
+                </div>
 
-                <strong>
-                    HirePrep
-                </strong>
-
-                <span>
-                    · Interview Preparation Platform
-                </span>
+                <div class="stat-text">
+                    Job roles available
+                </div>
 
             </div>
 
 
-            <span>
-                Prepare smarter. Practice with purpose.
-            </span>
+            <div class="stat-card">
 
+                <div class="stat-number">
+                    100+
+                </div>
+
+                <div class="stat-text">
+                    Verified questions per role
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-number">
+                    3
+                </div>
+
+                <div class="stat-text">
+                    Preparation modules
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-number">
+                    1
+                </div>
+
+                <div class="stat-text">
+                    Unified preparation platform
+                </div>
+
+            </div>
+
+        </section>
+        <div class="footer">
+            © 2026 HirePrep · Smart Interview Preparation Platform
         </div>
 
-    </footer>
+    </main>
 
 </body>
 
 </html>
-```

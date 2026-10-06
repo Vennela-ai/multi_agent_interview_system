@@ -2,22 +2,492 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>How It Works | HirePrep</title>
+    <title>HirePrep | How It Works</title>
 
-    <link rel="stylesheet" href="style.css">
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f6f7f9;
+            color: #111111;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            width: 100%;
+            padding: 18px 5%;
+            background: #ffffff;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .navbar-inner {
+            max-width: 1250px;
+            margin: auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 10px;
+
+            background: #111111;
+            color: #ffffff;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+            font-size: 19px;
+        }
+
+        .brand-name {
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            color: #555555;
+        }
+
+        .nav-links a:hover {
+            color: #111111;
+        }
+
+        .nav-button {
+            background: #111111;
+            color: #ffffff !important;
+
+            padding: 11px 20px;
+
+            border-radius: 8px;
+        }
+
+        /* ================= MAIN ================= */
+
+        .main {
+            max-width: 1250px;
+            margin: auto;
+
+            padding: 40px 25px 60px;
+        }
+
+        /* ================= HEADER ================= */
+
+        .page-header {
+            background: #111111;
+            color: #ffffff;
+
+            border-radius: 24px;
+
+            padding: 55px 60px;
+
+            text-align: center;
+
+            margin-bottom: 20px;
+        }
+
+        .page-label {
+            display: inline-block;
+
+            padding: 8px 14px;
+
+            border-radius: 30px;
+
+            background: #242424;
+            border: 1px solid #383838;
+
+            color: #cccccc;
+
+            font-size: 12px;
+
+            margin-bottom: 20px;
+        }
+
+        .page-header h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .page-header h1 span {
+            color: #999999;
+        }
+
+        .page-header p {
+            max-width: 650px;
+            margin: auto;
+
+            color: #bdbdbd;
+
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* ================= PROCESS ================= */
+
+        .process {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 18px;
+
+            margin-top: 20px;
+        }
+
+        .process-card {
+            background: #ffffff;
+
+            border: 1px solid #e5e5e5;
+
+            border-radius: 18px;
+
+            padding: 32px;
+
+            min-height: 280px;
+
+            position: relative;
+
+            transition: 0.25s;
+        }
+
+        .process-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow: 0 12px 30px rgba(0,0,0,0.07);
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+
+            background: #111111;
+            color: #ffffff;
+
+            border-radius: 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            margin-bottom: 28px;
+        }
+
+        .process-card h2 {
+            font-size: 23px;
+
+            margin-bottom: 12px;
+        }
+
+        .process-card p {
+            color: #777777;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+        .process-tag {
+            display: inline-block;
+
+            margin-top: 22px;
+
+            padding: 7px 11px;
+
+            background: #f1f1f1;
+
+            border-radius: 6px;
+
+            font-size: 11px;
+
+            color: #555555;
+        }
+
+        /* ================= FLOW ================= */
+
+        .flow-section {
+            margin-top: 45px;
+        }
+
+        .section-title {
+            text-align: center;
+
+            margin-bottom: 25px;
+        }
+
+        .section-title h2 {
+            font-size: 29px;
+
+            margin-bottom: 8px;
+        }
+
+        .section-title p {
+            color: #777777;
+
+            font-size: 14px;
+        }
+
+        .flow-box {
+            background: #ffffff;
+
+            border: 1px solid #e5e5e5;
+
+            border-radius: 20px;
+
+            padding: 35px;
+
+            display: grid;
+
+            grid-template-columns: repeat(5, 1fr);
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .flow-item {
+            text-align: center;
+        }
+
+        .flow-icon {
+            width: 55px;
+            height: 55px;
+
+            margin: 0 auto 12px;
+
+            background: #111111;
+            color: #ffffff;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .flow-item h3 {
+            font-size: 14px;
+
+            margin-bottom: 5px;
+        }
+
+        .flow-item p {
+            color: #888888;
+
+            font-size: 11px;
+        }
+
+        .arrow {
+            text-align: center;
+
+            font-size: 22px;
+
+            color: #aaaaaa;
+        }
+
+        /* ================= MODULES ================= */
+
+        .modules {
+            margin-top: 45px;
+
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .module {
+            background: #ffffff;
+
+            border: 1px solid #e5e5e5;
+
+            border-radius: 17px;
+
+            padding: 27px;
+        }
+
+        .module-number {
+            font-size: 11px;
+
+            color: #888888;
+
+            margin-bottom: 12px;
+        }
+
+        .module h3 {
+            font-size: 18px;
+
+            margin-bottom: 10px;
+        }
+
+        .module p {
+            color: #777777;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+        /* ================= CTA ================= */
+
+        .cta {
+            margin-top: 45px;
+
+            background: #111111;
+
+            color: #ffffff;
+
+            border-radius: 20px;
+
+            padding: 40px;
+
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 30px;
+
+            margin-bottom: 10px;
+        }
+
+        .cta p {
+            color: #aaaaaa;
+
+            font-size: 14px;
+
+            margin-bottom: 22px;
+        }
+
+        .cta a {
+            display: inline-block;
+
+            background: #ffffff;
+
+            color: #111111;
+
+            padding: 12px 24px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+            text-align: center;
+
+            padding-top: 28px;
+
+            color: #888888;
+
+            font-size: 12px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            .process {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-box {
+                grid-template-columns: 1fr;
+            }
+
+            .arrow {
+                transform: rotate(90deg);
+            }
+
+            .modules {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+
+            .nav-links a:not(.nav-button) {
+                display: none;
+            }
+
+            .main {
+                padding: 20px 15px 40px;
+            }
+
+            .page-header {
+                padding: 40px 25px;
+            }
+
+            .page-header h1 {
+                font-size: 36px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
+
 <body>
 
-    <!-- Navigation -->
+
+    <!-- ================= NAVBAR ================= -->
+
     <header class="navbar">
 
-        <div class="nav-container">
+        <div class="navbar-inner">
 
             <a href="index.html" class="brand">
 
@@ -25,16 +495,8 @@
                     H
                 </div>
 
-                <div class="brand-info">
-
-                    <div class="brand-name">
-                        HirePrep
-                    </div>
-
-                    <div class="brand-subtitle">
-                        Interview Preparation
-                    </div>
-
+                <div class="brand-name">
+                    HirePrep
                 </div>
 
             </a>
@@ -46,194 +508,310 @@
                     Home
                 </a>
 
-                <a href="features.html">
-                    Features
-                </a>
-
                 <a href="how-it-works.html">
                     How It Works
                 </a>
 
+                <a href="analyze.html" class="nav-button">
+                    Get Started
+                </a>
+
             </nav>
-
-
-            <a href="analyze.html" class="nav-button">
-                Get Started
-            </a>
 
         </div>
 
     </header>
 
 
-    <main>
 
-        <section class="how-section">
+    <main class="main">
 
-            <div class="container">
 
-                <div class="section-heading">
+        <!-- ================= PAGE HEADER ================= -->
 
-                    <div class="section-label">
-                        HOW IT WORKS
+        <section class="page-header">
+
+            <div class="page-label">
+                HOW HIREPREP WORKS
+            </div>
+
+            <h1>
+                From Profile to<br>
+                <span>Interview Preparation.</span>
+            </h1>
+
+            <p>
+                HirePrep combines resume analysis, job description
+                analysis, and verified interview questions into one
+                simple preparation workflow.
+            </p>
+
+        </section>
+
+
+
+        <!-- ================= THREE STEPS ================= -->
+
+        <section class="process">
+
+
+            <div class="process-card">
+
+                <div class="step-number">
+                    01
+                </div>
+
+                <h2>
+                    Upload
+                </h2>
+
+                <p>
+                    Upload your resume and provide the job description
+                    you are interested in. HirePrep accepts your actual
+                    career information as the starting point.
+                </p>
+
+                <div class="process-tag">
+                    Resume + Job Description
+                </div>
+
+            </div>
+
+
+
+            <div class="process-card">
+
+                <div class="step-number">
+                    02
+                </div>
+
+                <h2>
+                    Analyze
+                </h2>
+
+                <p>
+                    Separate AI-powered agents analyze your resume and
+                    job description to identify important skills,
+                    qualifications, technologies, and relevant information.
+                </p>
+
+                <div class="process-tag">
+                    Resume Agent + JD Agent
+                </div>
+
+            </div>
+
+
+
+            <div class="process-card">
+
+                <div class="step-number">
+                    03
+                </div>
+
+                <h2>
+                    Practice
+                </h2>
+
+                <p>
+                    Select your target job role and practice verified
+                    interview questions collected from legitimate public
+                    sources and stored in the question database.
+                </p>
+
+                <div class="process-tag">
+                    Verified Question Database
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ================= FLOW ================= -->
+
+        <section class="flow-section">
+
+            <div class="section-title">
+
+                <h2>
+                    Your Preparation Journey
+                </h2>
+
+                <p>
+                    A clear workflow designed to keep your preparation organized.
+                </p>
+
+            </div>
+
+
+            <div class="flow-box">
+
+
+                <div class="flow-item">
+
+                    <div class="flow-icon">
+                        01
                     </div>
 
-                    <h2>
-                        Three simple steps.
-                    </h2>
+                    <h3>
+                        Resume
+                    </h3>
 
                     <p>
-
-                        From documents to interview preparation
-                        in a simple workflow.
-
+                        Upload your profile
                     </p>
 
                 </div>
 
 
-                <div class="steps">
+                <div class="arrow">
+                    →
+                </div>
 
 
-                    <!-- Step 1 -->
-                    <div class="step">
+                <div class="flow-item">
 
-                        <div class="step-number">
-                            01
-                        </div>
-
-                        <div class="step-content">
-
-                            <h3>
-                                Upload
-                            </h3>
-
-                            <p>
-
-                                Upload your resume and the job
-                                description you are applying for.
-
-                            </p>
-
-                        </div>
-
+                    <div class="flow-icon">
+                        02
                     </div>
 
+                    <h3>
+                        Job
+                    </h3>
 
-                    <!-- Step 2 -->
-                    <div class="step">
-
-                        <div class="step-number">
-                            02
-                        </div>
-
-                        <div class="step-content">
-
-                            <h3>
-                                Analyze
-                            </h3>
-
-                            <p>
-
-                                Separate AI agents analyze your
-                                resume and the job requirements.
-
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Step 3 -->
-                    <div class="step">
-
-                        <div class="step-number">
-                            03
-                        </div>
-
-                        <div class="step-content">
-
-                            <h3>
-                                Practice
-                            </h3>
-
-                            <p>
-
-                                Receive questions tailored to
-                                your profile and the selected role.
-
-                            </p>
-
-                        </div>
-
-                    </div>
-
+                    <p>
+                        Analyze requirements
+                    </p>
 
                 </div>
 
 
-                <div class="cta-box">
+                <div class="arrow">
+                    →
+                </div>
 
-                    <div>
 
-                        <small>
-                            READY TO START?
-                        </small>
+                <div class="flow-item">
 
-                        <h3>
-                            Prepare with your actual job requirements.
-                        </h3>
-
+                    <div class="flow-icon">
+                        03
                     </div>
 
+                    <h3>
+                        Practice
+                    </h3>
 
-                    <a href="analyze.html" class="primary-btn">
-
-                        Start Preparing
-
-                        <span>
-                            →
-                        </span>
-
-                    </a>
+                    <p>
+                        Prepare with questions
+                    </p>
 
                 </div>
+
 
             </div>
 
         </section>
 
-    </main>
 
 
-    <!-- Footer -->
-    <footer class="footer">
+        <!-- ================= MODULES ================= -->
 
-        <div class="container footer-content">
+        <section class="modules">
 
-            <div>
 
-                <strong>
-                    HirePrep
-                </strong>
+            <div class="module">
 
-                <span>
-                    · Interview Preparation Platform
-                </span>
+                <div class="module-number">
+                    MODULE 01
+                </div>
+
+                <h3>
+                    Resume Analysis
+                </h3>
+
+                <p>
+                    Understand your skills, education, projects,
+                    experience, and other important resume information.
+                </p>
 
             </div>
 
 
-            <span>
-                Prepare smarter. Practice with purpose.
-            </span>
+
+            <div class="module">
+
+                <div class="module-number">
+                    MODULE 02
+                </div>
+
+                <h3>
+                    Job Analysis
+                </h3>
+
+                <p>
+                    Identify the important requirements, technologies,
+                    and qualifications mentioned in a job description.
+                </p>
+
+            </div>
+
+
+
+            <div class="module">
+
+                <div class="module-number">
+                    MODULE 03
+                </div>
+
+                <h3>
+                    Question Practice
+                </h3>
+
+                <p>
+                    Practice verified questions organized by job role,
+                    with batches of questions available for continued preparation.
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ================= CTA ================= -->
+
+        <section class="cta">
+
+            <h2>
+                Ready to Start Preparing?
+            </h2>
+
+            <p>
+                Analyze your profile and begin your interview preparation journey.
+            </p>
+
+            <a href="analyze.html">
+                Start Preparing →
+            </a>
+
+        </section>
+
+
+
+        <div class="footer">
+
+            © 2026 HirePrep · Smart Interview Preparation Platform
 
         </div>
 
-    </footer>
+
+    </main>
+
 
 </body>
 
 </html>
-
