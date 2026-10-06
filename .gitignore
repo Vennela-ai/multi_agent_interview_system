@@ -2,4 +2,5 @@
 __pycache__/
 *.pyc
 *.pyo
-backend/sample_resume.pdf
+backend/sample_resume.pdfbackend/agents/keys.txt
+.env
